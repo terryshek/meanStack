@@ -1,10 +1,10 @@
 <!-- for dialog used -->
     <div class="modal-header">
         <button type="button" ng-click="close()" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="myModalLabel">Delete Confirmation</h3>
+        <h3 id="myModalLabel">{{title}}</h3>
     </div>
     <div class="modal-body">
-        <p class="error-text">Are you sure you want to delete the user?</p>
+        <p class="error-text">{{content}}</p>
     </div>
     <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true" ng-click="close()">Cancel</button>

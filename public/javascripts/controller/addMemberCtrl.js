@@ -132,6 +132,8 @@ app.controller('addMemberCtrl', function($rootScope,$scope, $modalInstance, memb
 app.controller('deleteCtrl',function($scope, $modalInstance, items, memberService, $timeout){
     //$scope.deleteId = items;
     console.log(items)
+    $scope.title = items.title;
+    $scope.content = items.content;
     $scope.close = function(){
         $modalInstance.dismiss('cancel');
     };

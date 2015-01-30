@@ -87,7 +87,7 @@ app.controller('loginCreate', function ($scope, memberService, $modal, $log, $ro
     };
 //	$scope.angularVersion = window.location.hash.length > 1 ? window.location.hash.substring(1) : '1.2.0';
 
-    $scope.onFileSelect = function($files) {
+    $scope.submitForm = function($files) {
         $rootScope.$on('loadingModal')
         $scope.selectedFiles = [];
         //$scope.progress = [];

@@ -37,6 +37,8 @@ app.controller('hometCtrl',function($scope, memberService, $rootScope, deferServ
         //console.log(query)
         var passObj ={
             id:query._id,
+            title:'Delete confirmation',
+            content:'Are you sure to delete this record ?',
             callback:function(){
                 memberService.deleteQuery(query._id).then(function(res){
                         console.log(res)

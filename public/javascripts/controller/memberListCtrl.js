@@ -33,6 +33,8 @@ app.controller('memberlistCtrl', function ($scope, $modal, $log, $http, memberSe
     $scope.deleteList = function (memberobj) {
         var postObj = {
             id: memberobj._id,
+            title:'Delete confirmation',
+            content:'Are you sure to delete this user ?',
             callback: function () {
                 memberService.delete(this.id).then(function (res) {
                         console.log(res)
