@@ -15,11 +15,10 @@ app.controller('purchaseCtrl',function($scope,$rootScope,memberService,$modal){
     }
     $scope.submitForm= function(){
         var passObj ={
-            id:query._id,
             countProduct:$scope.countProduct,
             productObj:$scope.form,
-            title:'Delete confirmation',
-            content:'Are you sure to delete this record ?',
+            title:'Purchase confirmation',
+            content:'Are you sure to submit the order ?',
             callback:function(){
                 for ( var i = 0; i < passObj.countProduct; i++) {
                     var productObj={
@@ -31,10 +30,10 @@ app.controller('purchaseCtrl',function($scope,$rootScope,memberService,$modal){
                         console.log(res)
                     })
                 }
-                console.log(postObj)
+                console.log(passObj)
             }
         }
-        $rootScope.$broadcast("comfirmBox", postObj)
+        $rootScope.$broadcast("comfirmBox", passObj)
     }
 })
 
