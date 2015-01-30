@@ -1,0 +1,52 @@
+<% include main/header.ejs %>
+<div class="container" ng-controller="memberlistCtrl" style="display: none" id="adminTpl" >
+
+    <!--<div class="container">-->
+    <div class="col-xs-2 col-sm-2 col-md-2">
+        <button class="btn btn-primary navbar-btn" ladda="loading" data-spinner-size="30" ng-click="open()">New User
+        </button>
+    </div>
+    <div class="col-xs-8 col-sm-8 col-md-8" style="padding-top: 15px">
+
+    </div>
+
+    <!--<div class="well">-->
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th></th>
+            <th>First Name</th>
+            <th>mail</th>
+            <th>Username</th>
+            <th>Role</th>
+            <th style="width: 36px;"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="member in filteredList" my-post-repeat-directive>
+            <td>{{$index+1}}</td>
+            <td><img src="{{member.imageUrl}}" ng-click="open(member)"  class="img-circle" style=" cursor: pointer; height:50px; width:50px; "></td>
+            <td><a ng-click="open(member)" title="click to see more detail">{{member.username}}</a></td>
+            <td>{{member.email}}</td>
+            <td>{{member.fullname}}</td>
+            <td>
+                <div ng-switch on="member.role">
+                    <div class="animate-switch" ng-switch-when="true">Owner</div>
+                    <div class="animate-switch" ng-switch-when="false">Client</div>
+                </div>
+            </td>
+            <td>
+                <!-- Indicates a dangerous or potentially negative action -->
+                <button class="btn btn-xs btn-danger" type="button" ng-click="deleteList(member)"><i
+                            class="glyphicon glyphicon-trash" style="padding: 0 3px"></i>Delete
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <pagination total-items="totalItems" items-per-page="itemsPerPage"
+                ng-model="currentPage" ng-change="pageChanged()"></pagination>
+</div>
+<% include main/footer.ejs %>

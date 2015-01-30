@@ -1,0 +1,54 @@
+<% include main/header %>
+<div class="container" ng-controller="contactCtrl" >
+    <toaster-container></toaster-container>
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="well well-sm">
+                    <form class="form-horizontal" ng-submit="submitQuery(queryForm.$valid)" name="queryForm" novalidate autocomplete="off">
+                        <fieldset>
+                            <legend class="text-center">Contact us</legend>
+
+                            <!-- Name input-->
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="name">Name</label>
+                                <div class="col-md-9">
+                                    <input id="name" name="username" type="text" placeholder="Your name" class="form-control" value="<%=profile.fullname%>" ng-disabled="true" ng-model="form.username">
+                                </div>
+                            </div>
+
+                            <!-- Email input-->
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="email">Your E-mail</label>
+                                <div class="col-md-9">
+                                    <input id="email" name="email" type="text" value="<%=profile.email%>" placeholder="Your email" class="form-control" ng-model="form.email" ng-disabled="true">
+                                </div>
+                            </div>
+                            <div class="form-group" ng-class="{ 'has-error' : queryForm.title.$invalid && !queryForm.title.$pristine }">
+                                <label class="col-md-3 control-label" for="message">Message Title </label>
+                                <div class="col-md-9">
+                                    <input ng-model="form.title" type="text" class="form-control" id="title" name="title" placeholder="Please enter essage title here..." required/>
+                                    <p ng-show="queryForm.title.$invalid && !queryForm.title.$pristine" class="help-block">Title is required.</p>
+                                </div>
+                            </div>
+                            <!-- Message body -->
+                            <div class="form-group" ng-class="{ 'has-error' : queryForm.message.$invalid && !queryForm.message.$pristine }">
+                                <label class="col-md-3 control-label" for="message">Your message</label>
+                                <div class="col-md-9">
+                                    <textarea ng-model="form.message" class="form-control" id="message" name="message" placeholder="Please enter your message here..." rows="5" required></textarea>
+                                    <p ng-show="queryForm.message.$invalid && !queryForm.message.$pristine" class="help-block">Message is required.</p>
+                                </div>
+                            </div>
+
+                            <!-- Form actions -->
+                            <div class="form-group">
+                                <div class="col-md-12 text-right">
+                                    <button type="submit" class="btn btn-primary btn-lg" ng-disabled="queryForm.$invalid">Submit</button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+</div>
+<% include main/footer.ejs %>

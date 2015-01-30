@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html ng-app="member">
+<head lang="en">
+    <meta charset="UTF-8">
+    <META Http-Equiv="Cache-Control" Content="no-cache"/>
+    <META Http-Equiv="Pragma" Content="no-cache"/>
+    <META Http-Equiv="Expires" Content="0"/>
+    <title><%= title %></title>
+    <% include ../css %>
+    <style>
+        .hide {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+<nav class="navbar navbar-default" role="navigation" ng-controller="headerController">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" ng-init="navCollapsed = true"
+                ng-click="navCollapsed = !navCollapsed">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Hello,<%= profile.username %>
+            <% if(profile.role){ %>
+            Admin
+            <% } %>
+        </a>
+    </div>
+    <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'" ng-click="navCollapsed=true">
+        <ul class="nav navbar-nav">
+            <li ng-class="{ active: isActive('home')}"><a href="/home">Home</a></li>
+            <% if (role) { %>
+            <li ng-class="{ active: isActive('admin')}"><a href="/admin">admin</a></li>
+            <% } %>
+            <li ng-class="{ active: isActive('purchase')}"><a href="/purchase">Purchase</a></li>
+            <% if(!role){ %>
+            <li ng-class="{ active: isActive('contact')}"><a href="/contact">contact</a></li>
+            <% } %>
+        </ul>
+        <p class="navbar-btn">
+            <button ng-click="logout()" class="btn btn-danger pull-right">Log out</button>
+        </p>
+    </div>
+</nav>
