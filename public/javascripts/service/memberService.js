@@ -76,6 +76,9 @@ app.service('memberService', function($http, $rootScope, $timeout){
     memberService.reponse = function(obj){
         return $http.post("/response",obj)
     }
+    memberService.purchasing = function(obj){
+        return $http.post('/purchasing',obj)
+    }
     return memberService
 });
 

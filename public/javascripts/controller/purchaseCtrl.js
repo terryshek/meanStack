@@ -3,7 +3,9 @@
  */
 app.controller('purchaseCtrl',function($scope,$rootScope,memberService,$modal){
     console.log('purchaseCtrl')
-    $scope.form =
+    $scope.form ={
+
+    }
     $scope.countProduct = 1;
     $scope.products = [0]
     $scope.addcol = function(){
@@ -13,6 +15,20 @@ app.controller('purchaseCtrl',function($scope,$rootScope,memberService,$modal){
     }
     $scope.submitForm= function(id){
         console.log($scope.form)
+        console.log($scope.countProduct)
+        var postObj=[];
+        var productObj ={};
+        for (i = 0; i < $scope.countProduct; i++) {
+            productObj={
+                    product_name:$scope.form.product_name[i],
+                    product_quanity:$scope.form.product_quanity[i],
+                    product_description:$scope.form.product_description[i]
+                }
+            memberService.purchasing(productObj).then(function(res){
+                console.log(res)
+            })
+        }
+        console.log(postObj)
 
     }
 })

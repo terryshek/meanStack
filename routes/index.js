@@ -283,7 +283,7 @@ module.exports = function(app,passport){
 
             });  //	@END/ .req.busboy
         })	//	@END/ POST
-    // ==============================post qurery in cintact page ==========================//
+    // ==============================post qurery in contact page ==========================//
     app.post('/query',function(req,res){
         var user = req.body;
         var query = new contactQuery({
@@ -298,7 +298,29 @@ module.exports = function(app,passport){
             res.json({ 'Saved':data });
         });
     })
+//====================================post purchase product =================================//
+    app.post('/purchasing',function(req,res){
+        var productObj = req.body;
+        console.log(productObj)
+        console.log(req.user.username)
+        //for(var val in productObj){
+            var purchase = new product({
+                username:req.user.username,
+                product_name:productObj.product_name,
+                product_description:productObj.title,
+                product_quanity:productObj.product_quanity,
+                created_at: new Date().getMonth()+1 + "-" + new Date().getDate() + "-" + new Date().getFullYear()
+            })
+            console.log(purchase)
+            purchase.save(function (err, data) {
+                if (err) console.log(err);
+                else console.log('Saved : ', data );
+                res.json({ 'Saved':data });
+            });
+        //}
 
+
+    })
 }
 // route middleware to ensure user is logged in
 function isLoggedIn(req, res, next) {
