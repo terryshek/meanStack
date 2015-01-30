@@ -13,23 +13,28 @@ app.controller('purchaseCtrl',function($scope,$rootScope,memberService,$modal){
         $scope.products.push($scope.countProduct)
         $scope.countProduct++
     }
-    $scope.submitForm= function(id){
-        console.log($scope.form)
-        console.log($scope.countProduct)
-        var postObj=[];
-        var productObj ={};
-        for (i = 0; i < $scope.countProduct; i++) {
-            productObj={
-                    product_name:$scope.form.product_name[i],
-                    product_quanity:$scope.form.product_quanity[i],
-                    product_description:$scope.form.product_description[i]
+    $scope.submitForm= function(){
+        var passObj ={
+            id:query._id,
+            countProduct:$scope.countProduct,
+            productObj:$scope.form,
+            title:'Delete confirmation',
+            content:'Are you sure to delete this record ?',
+            callback:function(){
+                for ( var i = 0; i < passObj.countProduct; i++) {
+                    var productObj={
+                        product_name:passObj.productObj.product_name[i],
+                        product_quanity:passObj.productObj.product_quanity[i],
+                        product_description:passObj.productObj.product_description[i]
+                    }
+                    memberService.purchasing(productObj).then(function(res){
+                        console.log(res)
+                    })
                 }
-            memberService.purchasing(productObj).then(function(res){
-                console.log(res)
-            })
+                console.log(postObj)
+            }
         }
-        console.log(postObj)
-
+        $rootScope.$broadcast("comfirmBox", postObj)
     }
 })
 
