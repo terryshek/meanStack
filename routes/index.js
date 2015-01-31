@@ -44,6 +44,11 @@ module.exports = function(app,passport){
         //sess.test ="testing";
         res.render('home', { title: 'Welcome to admin Page', profile:req.user ,page:'contact',role:req.user.role });
     })
+    app.get("/order",isLoggedIn, function(req, res){
+        console.log("contact page !")
+        //sess.test ="testing";
+        res.render('order', { title: 'Welcome to admin Page', profile:req.user ,page:'order',role:req.user.role });
+    })
 
 // =============================================================================
 // AUTHENTICATE (FIRST LOGIN) ==================================================

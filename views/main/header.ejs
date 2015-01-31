@@ -32,6 +32,8 @@
     </div>
     <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'" ng-click="navCollapsed=true">
         <ul class="nav navbar-nav">
+            <li ng-class="{ active: isActive('order')}"><a href="/order">Order</a></li>
+
             <li ng-class="{ active: isActive('home')}"><a href="/home">Home</a></li>
             <% if (role) { %>
             <li ng-class="{ active: isActive('admin')}"><a href="/admin">admin</a></li>

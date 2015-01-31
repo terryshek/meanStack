@@ -20,7 +20,7 @@
                         </div>
                     </div>
                 </div>
-                <form role="form" ng-submit="submitForm()" id="productForm" novalidate autocomplete="off">
+                <form role="form" ng-submit="submitForm()" id="productForm" novalidate autocomplete="off" name="orderForm">
                     <div class="panel-body">
 
                         <div id="productItem_{{key}}" ng-repeat="(key, value) in products" >
@@ -34,7 +34,7 @@
                                         </label>
 
                                         <div class="controls">
-                                            <input ng-model="form.product_name[key]" class="form-control"/>
+                                            <input ng-model="form.product_name[key]" class="form-control" required/>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -56,7 +56,7 @@
                                                ng-model="form.product_quanity[key]" placeholder="qty"
                                                numbers-only="numbers-only" maxlength="2">
                                     </div>
-                                    <div class="col-xs-2" remove-me type="productItem_{{key}}">
+                                    <div class="col-xs-2" remove-me type="productItem_{{key}}" index="{{key}}">
                                         <button type="button" class="btn btn-link btn-xs">
                                             <span class="glyphicon glyphicon-trash"> </span>
                                         </button>

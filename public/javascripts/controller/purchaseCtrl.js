@@ -3,10 +3,9 @@
  */
 app.controller('purchaseCtrl',function($scope,$rootScope,memberService,$modal){
     console.log('purchaseCtrl')
-    $scope.form ={
-
-    }
     $scope.countProduct = 1;
+    $scope.form ={
+    }
     $scope.products = [0]
     $scope.addcol = function(){
     console.log('add')
@@ -28,6 +27,7 @@ app.controller('purchaseCtrl',function($scope,$rootScope,memberService,$modal){
                     }
                     memberService.purchasing(productObj).then(function(res){
                         console.log(res)
+                        $scope.countProduct = 1;
                     })
                 }
                 console.log(passObj)
@@ -44,11 +44,15 @@ app.directive("removeMe", function($rootScope) {
 
             element.bind("click",function() {
                 console.log(iAttrs.type)
+                console.log(iAttrs.index)
                 var passObj ={
                     title:'Delete confirmation',
                     content:'Are you sure to delete this product ?',
                     callback:function(){
                         document.getElementById(iAttrs.type).remove();
+                        angular.forEach(scope.form, function(val,index){
+                            delete val[iAttrs.index];
+                        })
                     }
                 }
                 $rootScope.$broadcast('comfirmBox',passObj)
