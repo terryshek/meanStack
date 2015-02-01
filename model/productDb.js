@@ -5,6 +5,7 @@ var ProductSchema = new mongoose.Schema({
     product_name:String,
     product_description:String,
     product_quanity:Number,
+    purchaseStatus:{type:String,default:"confirmed"},
     created_at: { type : Date },
     updated_at: { type: Date, default: Date.now }
 });

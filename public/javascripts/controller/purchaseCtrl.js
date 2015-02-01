@@ -1,3 +1,4 @@
+
 /**
  * Created by terryshek on 29/1/15.
  */
@@ -53,6 +54,7 @@ app.directive("removeMe", function($rootScope) {
                         angular.forEach(scope.form, function(val,index){
                             delete val[iAttrs.index];
                         })
+                        //scope.countProduct--;
                     }
                 }
                 $rootScope.$broadcast('comfirmBox',passObj)

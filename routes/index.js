@@ -134,6 +134,7 @@ module.exports = function(app,passport){
             });
         })
     });
+    //query respost
     app.post('/response', function(req, res, next) {
         //console.log("update!")
         console.log(req.body)
@@ -144,7 +145,21 @@ module.exports = function(app,passport){
             res.json(post);
         });
     });
-
+    // get all order
+    app.post('/orderList',function(req,res){
+        var queryObj ={};
+        if(req.body.role){
+            queryObj = {};
+        }else{
+            queryObj = {username:req.body.username};
+        }
+        console.log(req.body.username)
+        console.log(queryObj)
+        product.find(queryObj).sort( { "created_at": -1 }).find(function (err, todos) {
+            if (err) return next(err);
+            res.json(todos);
+        });
+    })
     /* GET /todos/id */
     app.get('/users/:username/:password', function(req, res, next) {
         account.find({username:req.params.username, password:req.params.password}, function (err, post) {

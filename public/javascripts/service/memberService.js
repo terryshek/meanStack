@@ -79,6 +79,19 @@ app.service('memberService', function($http, $rootScope, $timeout){
     memberService.purchasing = function(obj){
         return $http.post('/purchasing',obj)
     }
+    memberService.orderList = function(){
+        $http.post("/orderList", this.profileObj).success(function(data){
+            console.log(data)
+            memberService.list = data
+            if(memberService.list.length <=0){
+                console.log("run")
+                //toaster.pop('note', "", "No record found!");
+                $timeout(function() {
+                    $rootScope.$broadcast('OffloadingModal')
+                }, 1000);
+            }
+        })
+    }
     return memberService
 });
 
