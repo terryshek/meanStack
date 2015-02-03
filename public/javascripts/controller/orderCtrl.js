@@ -25,4 +25,30 @@ app.controller('orderCtrl',function($scope, $rootScope, $modal, memberService){
             });
             //==bootsrap ui paging
         }, true);
+    $scope.showDetail = function(itemObj){
+        console.log(itemObj)
+    }
 })
+app.directive('hoverItem', [ '$parse', '$timeout', function($parse, $timeout) {
+    return function(scope, elem, attr) {
+        var fn = $parse(attr['showDetail']);
+        //elem.bind('change', function(evt) {
+        //    var files = [], fileList, i;
+        //    fileList = evt.target.files;
+        //    if (fileList != null) {
+        //        for (i = 0; i < fileList.length; i++) {
+        //            files.push(fileList.item(i));
+        //        }
+        //    }
+        //    $timeout(function() {
+        //        fn(scope, {
+        //            $files : files,
+        //            $event : evt
+        //        });
+        //    });
+        //});
+        elem.on('click', function(){
+            console.log('click')
+        });
+    };
+} ]);

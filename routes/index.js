@@ -323,12 +323,15 @@ module.exports = function(app,passport){
         var productObj = req.body;
         console.log(productObj)
         console.log(req.user.username)
-        //for(var val in productObj){
+        productObj.forEach(function(val, index) {
+            // el - current element, i - index
+            console.log(val)
             var purchase = new product({
                 username:req.user.username,
-                product_name:productObj.product_name,
-                product_description:productObj.title,
-                product_quanity:productObj.product_quanity,
+                product_name:val.product_name,
+                product_description:val.product_description,
+                product_quanity:val.product_quanity,
+                productImg:val.productImg,
                 created_at: new Date().getMonth()+1 + "-" + new Date().getDate() + "-" + new Date().getFullYear()
             })
             console.log(purchase)
@@ -337,7 +340,7 @@ module.exports = function(app,passport){
                 else console.log('Saved : ', data );
                 res.json({ 'Saved':data });
             });
-        //}
+        });
 
 
     })

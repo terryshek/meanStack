@@ -4,10 +4,10 @@ var ProductSchema = new mongoose.Schema({
     username: String,
     product_name:String,
     product_description:String,
+    productImg:{type:String,default:"/img/undefined.png"},
     product_quanity:Number,
-    purchaseStatus:{type:String,default:"confirmed"},
-    created_at: { type : Date },
-    updated_at: { type: Date, default: Date.now }
+    purchaseStatus:{type:String,default:"pending"},
+    created_at: { type: Date, default: Date.now }
 });
 
 module.exports = mongoose.model('product', ProductSchema);

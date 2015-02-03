@@ -1,7 +1,7 @@
 <% include main/header %>
 <div class="container" ng-controller="orderCtrl">
     <!--<div class="row col-md-6 col-md-offset-2 custyle">-->
-    <table class="table table-striped custab">
+    <table class="table table-hover custab" >
         <thead>
         <h1 class="pull-left">Purchase Order</h1>
         <!--<a href="#" class="btn btn-primary btn-xs pull-right"><b>+</b> Add new categories</a>-->
@@ -14,7 +14,7 @@
             <th style="text-align: center">Action</th>
         </tr>
         </thead>
-        <tr ng-repeat="item in filteredList" ng-class="{warning:!item.ans_status, default:item.ans_status}">
+        <tr ng-repeat="item in filteredList" ng-class="{warning:!item.ans_status, default:item.ans_status}" ng-click="showDetail(item)">
             <td>{{$index+1}}</td>
             <td>{{item.product_name}}</td>
             <td>{{item.product_quanity}}</td>

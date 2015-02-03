@@ -20,58 +20,52 @@
                         </div>
                     </div>
                 </div>
-                <form role="form" ng-submit="submitForm()" id="productForm" novalidate autocomplete="off" name="orderForm">
+                <form role="form" ng-submit="submitForm(orderForm.$valid)" id="orderForm" novalidate autocomplete="off" name="orderForm">
                     <div class="panel-body">
 
-                        <div id="productItem_{{key}}" ng-repeat="(key, value) in products" >
-                            <div class="row">
-                                <!--<div class="col-xs-2"><img class="img-responsive" src="http://placehold.it/100x70">-->
-                                <!--</div>-->
-                                <div class="col-xs-6">
-                                    <div class="form-group">
-                                        <label class="control-label" for="queryMsg">
-                                            Product Name:
-                                        </label>
+                        <table class="table" align="center" valign="middle">
+                            <tr>
 
-                                        <div class="controls">
-                                            <input ng-model="form.product_name[key]" class="form-control" required/>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="control-label" for="queryMsg">
-                                            Product Description
-                                        </label>
+                                <th>Product Img</th>
+                                <!--<th></th>-->
+                                <th>Product</th>
+                                <th>Description</th>
+                                <th>Qty</th>
+                                <th></th>
+                            </tr>
+                            <tr ng:repeat="item in invoice.items">
 
-                                        <div class="controls">
-                                            <textarea ng-model="form.product_description[key]" class="form-control"> {{product_description}}</textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xs-6">
-                                    <div class="col-xs-6 text-right">
-                                        <h6><strong><span class="text-muted">x</span></strong></h6>
-                                    </div>
-                                    <div class="col-xs-4">
-                                        <input type="text" class="form-control input-sm"
-                                               ng-model="form.product_quanity[key]" placeholder="qty"
-                                               numbers-only="numbers-only" maxlength="2">
-                                    </div>
-                                    <div class="col-xs-2" remove-me type="productItem_{{key}}" index="{{key}}">
-                                        <button type="button" class="btn btn-link btn-xs">
-                                            <span class="glyphicon glyphicon-trash"> </span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                                <td width="30%">
+                                    <input type="file" ng-file-select="onFileSelect($files, {{$index}})" accept="image/*">
+                                </td>
+                                <!--<td width="30%"><input type="file" ng-file-select="onFileSelect($files)" accept="image/*"></td>-->
+                                <td width="30%" ng-class="{ 'has-error' : orderForm.product_name_{{$index}}.$invalid && !orderForm.product_name_{{$index}}.$pristine }">
+                                    <input type="text" name="product_name_{{$index}}" ng-model="item.product_name"class="input-small"  required placeholder="Product name!">
+                                    <p ng-show="orderForm.product_name_{{$index}}.$invalid && !orderForm.product_name_{{$index}}.$pristine"  class="help-block">Product name is
+                                        required.</p>
+
+                                </td>
+                                <td width="35%"><input type="text" ng-model="item.product_description"class="input-small" ng-class="{ error: !item.product_description }" placeholder="Product description !"></td>
+                                <td width="5%" ng-class="{ 'has-error' : orderForm.product_quanity_{{$index}}.$invalid && !orderForm.product_quanity_{{$index}}.$pristine }">
+                                    <input type="text" numbers-only="numbers-only" ng-model="item.product_quanity" required class="input-mini" ng-maxlength="1" ng-class="{ error: !item.product_quanity }" name="product_quanity_{{$index}}">
+                                    <p ng-show="orderForm.product_quanity_{{$index}}.$invalid && !orderForm.product_quanity_{{$index}}.$pristine"  class="help-block">Product Qty is
+                                        required.</p>
+                                </td>
+                                <td>
+                                <!-- Indicates a dangerous or potentially negative action -->
+                                <button class="btn btn-xs btn-danger" type="button" ng-click="removeItem($index)"><i
+                                            class="glyphicon glyphicon-trash" style="padding: 0 3px"></i>Delete
+                                </button>
+                                </td>
+
+                            </tr>
+                        </table>
 
                         </div>
-
-                    </div>
                     <div class="panel-footer">
                         <div class="row text-center">
                             <div class="col-xs-12">
-                                <button type="button" class="btn btn-success pull-right"
-                                        ng-click="submitForm(key)">
+                                <button type="submit" class="btn btn-success pull-right" ng-disabled="orderForm.$invalid">
                                     Checkout
                                 </button>
                             </div>
