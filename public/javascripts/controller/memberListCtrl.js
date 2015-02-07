@@ -4,9 +4,10 @@
 app.controller('memberlistCtrl', function ($scope, $modal, $log, $http, memberService, resourceData, $rootScope, $q, deferService) {
 
     //$scope.$broadcast('LOAD');
-
-    deferService.deferredFn(memberService.getList())
-
+    $scope.refresh = function(){
+        deferService.deferredFn(memberService.getList())
+    }
+    $scope.refresh()
     $scope.$watch(function () {
             return memberService.list;
         },

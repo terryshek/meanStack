@@ -4,6 +4,10 @@
 app.controller('hometCtrl',function($scope, memberService, $rootScope, deferService,$modal, $log, toaster,$timeout){
     console.log("home")
     $scope.role = memberService.profileObj.role
+    $scope.refresh = function(){
+        memberService.querylist();
+
+    }
     memberService.querylist();
     $scope.$watch(function () {
             return memberService.list;

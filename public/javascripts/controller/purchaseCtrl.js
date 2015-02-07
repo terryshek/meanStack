@@ -19,6 +19,11 @@ app.controller('purchaseCtrl',function($scope,$rootScope,memberService,$modal,$u
         $scope.invoice.items.push(new productObj());
     }
 // =========================================================upload img===============================================================//
+    $scope.clickUpload = function(index){
+        //console.log(index)
+        angular.element('#productImg_'+index).trigger('click');
+        //document.getElementById("timerValue").trigger('click');
+    };
     $scope.abort = function(index) {
         $scope.upload[index].abort();
         $scope.upload[index] = null;

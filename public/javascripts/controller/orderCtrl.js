@@ -1,8 +1,11 @@
 /**
  * Created by terry on 1/31/2015.
  */
-app.controller('orderCtrl',function($scope, $rootScope, $modal, memberService){
+app.controller('orderCtrl',function($scope, $rootScope, $modal, memberService,$log){
     console.log("OrderCtrl")
+    $scope.refresh = function(){
+        memberService.orderList()
+    }
     memberService.orderList()
     $scope.$watch(function () {
             return memberService.list;
@@ -25,30 +28,31 @@ app.controller('orderCtrl',function($scope, $rootScope, $modal, memberService){
             });
             //==bootsrap ui paging
         }, true);
-    $scope.showDetail = function(itemObj){
-        console.log(itemObj)
-    }
+
+        $scope.showDetail = function(itemObj) {
+            console.log(itemObj)
+            var modalInstance = $modal.open({
+                templateUrl: 'view/orderDetail.html',
+                controller: 'orderDetailCtrl',
+                size: 'lg',
+                resolve: {
+                    items: function () {
+                        $log.info('Modal created');
+                            return itemObj
+                    }
+                }
+            });
+
+            modalInstance.result.then(function () {
+                $log.info('Modal created');
+            }, function () {
+                $scope.loading = false; // start loading
+                $log.info('Modal dismissed at: ' + new Date());
+            });
+        }
 })
-app.directive('hoverItem', [ '$parse', '$timeout', function($parse, $timeout) {
-    return function(scope, elem, attr) {
-        var fn = $parse(attr['showDetail']);
-        //elem.bind('change', function(evt) {
-        //    var files = [], fileList, i;
-        //    fileList = evt.target.files;
-        //    if (fileList != null) {
-        //        for (i = 0; i < fileList.length; i++) {
-        //            files.push(fileList.item(i));
-        //        }
-        //    }
-        //    $timeout(function() {
-        //        fn(scope, {
-        //            $files : files,
-        //            $event : evt
-        //        });
-        //    });
-        //});
-        elem.on('click', function(){
-            console.log('click')
-        });
-    };
-} ]);
+app.controller('orderDetailCtrl',function($scope,items){
+    console.log(items)
+    $scope.product = items
+
+})

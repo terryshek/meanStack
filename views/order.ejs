@@ -3,7 +3,8 @@
     <!--<div class="row col-md-6 col-md-offset-2 custyle">-->
     <table class="table table-hover custab" >
         <thead>
-        <h1 class="pull-left">Purchase Order</h1>
+        <h1 class="navbar-btn pull-left">Purchase Order</h1>
+        <button class="btn btn-info navbar-btn pull-right" ng-click="refresh()"><span class="glyphicon glyphicon-refresh"></span> Refresh</button>
         <!--<a href="#" class="btn btn-primary btn-xs pull-right"><b>+</b> Add new categories</a>-->
         <tr>
             <th>Index</th>
@@ -11,7 +12,6 @@
             <th>Qty</th>
             <th>Created date</th>
             <th>Status</th>
-            <th style="text-align: center">Action</th>
         </tr>
         </thead>
         <tr ng-repeat="item in filteredList" ng-class="{warning:!item.ans_status, default:item.ans_status}" ng-click="showDetail(item)">
@@ -20,10 +20,6 @@
             <td>{{item.product_quanity}}</td>
             <td>{{item.created_at}}</td>
             <td>{{item.purchaseStatus}}</td>
-            <td class="text-center">
-                <a class='btn btn-info btn-xs' ng-click="queryBox(item)"><span class="glyphicon glyphicon-edit">Detail</span></a>
-                <a class="btn btn-danger btn-xs" ng-hide="!role" ng-click="deleteQuery(item)"><span class="glyphicon glyphicon-trash">Delete</span></a>
-            <td>
         </tr>
     </table>
     <pagination total-items="totalItems" items-per-page="itemsPerPage"
