@@ -22,7 +22,7 @@
                 <div class="row">
                     <div class="col-xs-2">
                         <img class="img-responsive" src="{{item.productImg}}" ng-click="clickUpload($index)" style="cursor: pointer">
-                        <input type="file" ng-file-select="onFileSelect($files,{{$index}})" accept="image/*" class="hide" id="productImg">
+                        <input type="file" ng-file-select="onFileSelect($files,{{$index}})" accept="image/*" class="hide" id="productImg_{{$index}}">
                     </div>
                     <div class="col-xs-4">
                         <label for="product_name_{{$index}}">Product Name :</label>

@@ -22,6 +22,7 @@ app.controller('purchaseCtrl',function($scope,$rootScope,memberService,$modal,$u
     $scope.clickUpload = function(index){
         //console.log(index)
         angular.element('#productImg_'+index).trigger('click');
+
         //document.getElementById("timerValue").trigger('click');
     };
     $scope.abort = function(index) {
