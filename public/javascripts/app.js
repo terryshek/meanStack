@@ -26,8 +26,9 @@ app.run(function($rootScope, memberService, localStorageService, $modal, $log, $
             $log.info('Modal dismissed at: ' + new Date());
         });
     })
-    $rootScope.$on('toasterAlert',function(){
-        toaster.pop('success', "", "Login successful!");
+    $rootScope.$on('toasterAlert',function(event,text){
+        console.log(text)
+        toaster.pop('success', "", text);
     })
     $rootScope.$on("comfirmBox",function(event,memberobj){
         console.log(memberobj)

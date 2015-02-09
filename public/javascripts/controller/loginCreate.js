@@ -31,17 +31,17 @@ app.controller('loginCreate', function ($scope, memberService, $modal, $log, $ro
     $scope.isActiveTab = function(tabUrl) {
         return tabUrl == $scope.currentTab;
     }
-
+    $scope.clickUpload = function(){
+        console.log("run")
+        angular.element('#uploadImg').trigger('click');
+    };
     console.log("loginCreate")
     $scope.submitAccount = function () {
         $scope.loading = true; // start loading
         memberService.login($scope.form).then(function (response) {
                 console.log(response.data);
                 if (response.data.status == 200) {
-                    console.log(response.data.profile)
-                    $rootScope.profileObj = response.data.profile
-                    console.log(memberService.profileObj)
-                    $rootScope.$broadcast('toasterAlert')
+                    $rootScope.$broadcast('toasterAlert', "Login successful!")
                     localStorageService.cookie.set('login', true);
                     //$location.path( '/admin' );
                     window.location.href = '/home';
@@ -49,10 +49,8 @@ app.controller('loginCreate', function ($scope, memberService, $modal, $log, $ro
                 } else {
                     $scope.warning = response.data.message
                 }
-                $scope.loading = false; // stop loading
             },
             function () {
-                $scope.loading = false; // stop loading
                 console.log("login error")
             })
     }
@@ -87,7 +85,7 @@ app.controller('loginCreate', function ($scope, memberService, $modal, $log, $ro
     };
 //	$scope.angularVersion = window.location.hash.length > 1 ? window.location.hash.substring(1) : '1.2.0';
 
-    $scope.submitForm = function($files) {
+    $scope.onFileSelect = function($files) {
         $rootScope.$on('loadingModal')
         $scope.selectedFiles = [];
         //$scope.progress = [];

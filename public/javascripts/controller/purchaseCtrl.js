@@ -93,20 +93,15 @@ app.controller('purchaseCtrl',function($scope,$rootScope,memberService,$modal,$u
             title:'Purchase confirmation',
             content:'Are you sure to submit the order ?',
             callback:function(){
-                //for ( var i = 0; i < passObj.countProduct; i++) {
-                //    var productObj={
-                //        product_name:passObj.productObj.product_name[i],
-                //        product_quanity:passObj.productObj.product_quanity[i],
-                //        product_description:passObj.productObj.product_description[i]
-                //    }
                     memberService.purchasing(passObj.productObj).then(function(res){
-                        console.log(res)
-                        $scope.countProduct = 1;
+                        console.log(res.status)
+                        if(res.status =200){
+                            $rootScope.$broadcast('toasterAlert',"Order successful!")
+                        }
                     })
-                //}
                 console.log(passObj)
             }
         }
-        $rootScope.$broadcast("comfirmBox", passObj)
+        $rootScope.$broadcast("comfirmBox", "Order successful!")
     }
 })
