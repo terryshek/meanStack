@@ -1,16 +1,16 @@
 app.service('memberService', function($http, $rootScope, $timeout){
-    var memberService ={
+    var _this ={
         url: '/users/',
         profileObj:{},
         list:[]
     };
-    memberService.getProfile = function(){
+    _this.getProfile = function(){
         return $http.get("/getProfile")
     }
-    memberService.getList = function(){
-        memberService.getProfile().success(function(res){
+    _this.getList = function(){
+        _this.getProfile().success(function(res){
             console.log(res)
-            $http.post(memberService.url+"userlist", {username:res.username}).
+            $http.post(_this.url+"userlist", {username:res.username}).
                 success(function(data, status, headers, config) {
                     //angular.forEach(data, function(val,index){
                     //    console.log(val.imageUrl)
@@ -18,7 +18,7 @@ app.service('memberService', function($http, $rootScope, $timeout){
 
                     console.log(data)
 
-                    memberService.list = data;
+                    _this.list = data;
                 }).
                 error(function(data, status, headers, config) {
                     // called asynchronously if an error occurs
@@ -26,45 +26,45 @@ app.service('memberService', function($http, $rootScope, $timeout){
                 });
         })
     }
-    memberService.deletetImg = function(img){
+    _this.deletetImg = function(img){
         return $http.post("/deleteImg",img)
     }
-    memberService.getDataList = function(){
-        return  $http.get(memberService.url+"userlist")
+    _this.getDataList = function(){
+        return  $http.get(_this.url+"userlist")
     }
-    memberService.add = function(obj){
-        return $http.post(memberService.url +"adduser",obj)
+    _this.add = function(obj){
+        return $http.post(_this.url +"adduser",obj)
     }
-    memberService.update = function(obj){
+    _this.update = function(obj){
         console.log(obj);
-        return $http.post(memberService.url +"update",obj)
+        return $http.post(_this.url +"update",obj)
 }
-    memberService.upload = function(obj){
+    _this.upload = function(obj){
         return $http.post("/upload/",obj)
     }
-    memberService.delete = function(id){
-        return $http.delete(memberService.url +"deleteuser/"+id)
+    _this.delete = function(id){
+        return $http.delete(_this.url +"deleteuser/"+id)
     }
-    memberService.deleteQuery =function(id){
+    _this.deleteQuery =function(id){
         return $http.delete("/deleteQuery/"+id)
     }
-    memberService.login = function(obj){
+    _this.login = function(obj){
         return $http.post("/login", obj)
     }
-    memberService.checkExit = function(obj){
-        return $http.post(memberService.url +"checkExit", obj)
+    _this.checkExit = function(obj){
+        return $http.post(_this.url +"checkExit", obj)
     }
-    memberService.logout = function(obj){
+    _this.logout = function(obj){
         return $http.get("/logout")
     }
-    memberService.query = function(obj){
+    _this.query = function(obj){
         return $http.post("/query", obj)
     }
-    memberService.querylist = function(){
+    _this.querylist = function(){
         $http.post("/querylist", this.profileObj).success(function(data){
             console.log(data)
-            memberService.list = data
-            if(memberService.list.length <=0){
+            _this.list = data
+            if(_this.list.length <=0){
                 console.log("run")
                 //toaster.pop('note', "", "No record found!");
                 $timeout(function() {
@@ -73,17 +73,17 @@ app.service('memberService', function($http, $rootScope, $timeout){
             }
         })
     }
-    memberService.reponse = function(obj){
+    _this.reponse = function(obj){
         return $http.post("/response",obj)
     }
-    memberService.purchasing = function(obj){
+    _this.purchasing = function(obj){
         return $http.post('/purchasing',obj)
     }
-    memberService.orderList = function(){
+    _this.orderList = function(){
         $http.post("/orderList", this.profileObj).success(function(data){
             console.log(data)
-            memberService.list = data
-            if(memberService.list.length <=0){
+            _this.list = data
+            if(_this.list.length <=0){
                 console.log("run")
                 //toaster.pop('note', "", "No record found!");
                 $timeout(function() {
@@ -92,7 +92,7 @@ app.service('memberService', function($http, $rootScope, $timeout){
             }
         })
     }
-    return memberService
+    return _this
 });
 
 app.service('resourceData', function(){

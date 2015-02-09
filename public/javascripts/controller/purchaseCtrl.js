@@ -102,6 +102,6 @@ app.controller('purchaseCtrl',function($scope,$rootScope,memberService,$modal,$u
                 console.log(passObj)
             }
         }
-        $rootScope.$broadcast("comfirmBox", "Order successful!")
+        $rootScope.$broadcast("comfirmBox", passObj)
     }
 })
