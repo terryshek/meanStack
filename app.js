@@ -44,11 +44,6 @@ var app = express();
 
 
 //vhost
-//app.use(vhost('mail.example.com', function(req, res){}));
-app.use(vhost('terry.com', function(req,res){
-    console.log('run')
-    res.send({'status':'200', msg:"login success", profile:user});
-}));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -78,6 +73,7 @@ app.use(busboy());
 // routes ======================================================================
 require('./routes/index')(app, passport); // load our routes and pass in our app and fully configured passport
 
+app.use(vhost('shinychang.net', require('./b.js')));
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     console.log("a");

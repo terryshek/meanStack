@@ -7,44 +7,6 @@
     <form role="form" ng-submit="submitForm(orderDetail.$valid)" id="orderDetail" novalidate autocomplete="off"
           name="orderDetail">
         <div class="modal-body">
-
-            <!--<table class="pull-left col-md-8 ">-->
-                <!--<tbody>-->
-                <!--<tr>-->
-                    <!--<div class="col-md-4">-->
-                        <!--<img ng-src="{{product.productImg}}" alt="" class="img-thumbnail" ng-model="product.productImg">-->
-                    <!--</div>-->
-                <!--</tr>-->
-                <!--<tr>-->
-                    <!--<td class="h6" width="60%"><strong>Product Name: </strong></td>-->
-                    <!--<td width="5%"></td>-->
-                    <!--<td class="h5" width="35%"><input type="text" name="product_name" id="product_name" ng-model="product.product_name"/></td>-->
-                <!--</tr>-->
-
-                <!--<tr>-->
-                        <!--<td class="h6" width="60"><strong>Product quantity : </strong></td>-->
-                    <!--<td width="5%"></td>-->
-                    <!--<td class="h5" width="35%"><input type="text" name="product_quanity" ng-model="product.product_quanity" id="product_quanity"/></td>-->
-                <!--</tr>-->
-                <!--<tr style="max-height: 100px">-->
-                    <!--<td width="100%" class="btn-mais-info text-primary">-->
-                        <!--<i class="open_info fa fa-plus-square-o"></i>-->
-                        <!--<i class="open_info hide fa fa-minus-square-o"></i> Product Info :-->
-                    <!--</td>-->
-                <!--</tr>-->
-                <!--</tbody>-->
-            <!--</table>-->
-
-
-
-
-            <!--<div class="clearfix"></div>-->
-            <!--<textarea ng-model="product.product_description" id="product_description" name="product_description" rows="5"></textarea>-->
-            <!--<p class="">{{product.product_description}}</p>-->
-            <!--<div class="container">-->
-                <!--<div class="row">-->
-                    <!--<div class="col-xs-12 col-sm-6 col-md-6">-->
-                        <!--<div class="well well-sm">-->
                             <div class="row">
                                 <div class="col-sm-4 col-md-4">
                                     <img ng-src="{{product.productImg}}" alt="" class="img-rounded img-responsive" />
@@ -69,29 +31,18 @@
                                             </div>
                                             <div class="col-sm-7 col-md-7">
                                                 <input type="text" numbers-only="numbers-only" id="product_quantity"
-                                                       ng-model="product.product_quantity" required class="input-small"
+                                                       ng-model="product.product_quanity" required class="input-small" name="product_quanity"
                                                        maxlength="2">
                                             </div>
                                         </div>
                                     </div>
-                                    <p ng-show="orderForm.product_quanity.$invalid && !orderForm.product_quanity.$pristine"  class="text-danger">Qty is required.</p>
+                                    <p ng-show="orderDetail.product_quanity.$invalid && !orderDetail.product_quanity.$pristine"  class="text-danger">Qty is required.</p>
                                     <p ng-show="orderDetail.product_name.$invalid && !orderDetail.product_name.$pristine"  class="text-danger">Product name is required.</p>
                                     <label for="product_description">Product Description :</label>
                                     <textarea ng-model="item.product_description" class="form-control" id="product_description"  placeholder="Product description !"></textarea>
-                                    <!--<p>-->
-                                        <!--<i class="glyphicon glyphicon-envelope"></i>email@example.com-->
-                                        <!--<br />-->
-                                        <!--<i class="glyphicon glyphicon-globe"></i><a href="http://www.jquery2dotnet.com">www.jquery2dotnet.com</a>-->
-                                        <!--<br />-->
-                                        <!--<i class="glyphicon glyphicon-gift"></i>June 02, 1988-->
-                                    <!--</p>-->
-                                    <!-- Split button -->
+
                                 </div>
                             </div>
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
         </div>
 
         <div class="modal-footer">

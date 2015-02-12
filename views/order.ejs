@@ -10,6 +10,7 @@
             <th>Index</th>
             <th>Title</th>
             <th>Qty</th>
+            <th>Price</th>
             <th>Created date</th>
             <th>Status</th>
         </tr>
@@ -18,7 +19,9 @@
             <td>{{$index+1}}</td>
             <td>{{item.product_name}}</td>
             <td>{{item.product_quanity}}</td>
-            <td>{{item.created_at}}</td>
+            <td ng-show="!item.price">no price yet!</td>
+            <td ng-show="item.price">{{item.price}}</td>
+            <td>{{dateFormat(item.created_at)}}</td>
             <td>{{item.purchaseStatus}}</td>
         </tr>
     </table>

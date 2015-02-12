@@ -52,9 +52,16 @@ app.controller('orderCtrl',function($scope, $rootScope, $modal, memberService,$l
                 $log.info('Modal dismissed at: ' + new Date());
             });
         }
+    $scope.dateFormat = function(orderDate){
+       return deferService.dataForm(orderDate)
+    }
 })
 app.controller('orderDetailCtrl',function($scope,items){
     console.log(items)
     $scope.product = items
+
+    $scope.submitForm = function(){
+
+    }
 
 })

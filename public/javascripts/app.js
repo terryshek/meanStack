@@ -50,6 +50,13 @@ app.run(function($rootScope, memberService, localStorageService, $modal, $log, $
             $log.info('Modal dismissed at: ' + new Date());
         });
     })
+    $rootScope.$on("dateForm",function(event,orderDate){
+        console.log(orderDate)
+        date =  new Date(orderDate)
+        orderDateStr = date.toDateString() // "Thu Dec 29 2011"
+        console.log(orderDateStr)
+        return orderDateStr
+    })
 
 })
 app.directive('numbersOnly', function(){

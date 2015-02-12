@@ -6,6 +6,7 @@ var ProductSchema = new mongoose.Schema({
     product_description:String,
     productImg:{type:String,default:"/img/undefined.png"},
     product_quanity:Number,
+    price:{type:Number,default:0},
     purchaseStatus:{type:String,default:"pending"},
     created_at: { type: Date, default: Date.now }
 });

@@ -92,6 +92,9 @@ app.service('memberService', function($http, $rootScope, $timeout){
             }
         })
     }
+    _this.saveOder =function(obj){
+        return $http.post("/saveOrder",obj)
+    }
     return _this
 });
 
@@ -112,6 +115,12 @@ app.factory('deferService', function ($q, $rootScope) {
             deferred.resolve(fn);
 
             return deferred.promise;
+        },
+        dataForm:function(orderDate){
+            date =  new Date(orderDate)
+            orderDateStr = date.toDateString() // "Thu Dec 29 2011"
+            console.log(orderDateStr)
+            return orderDateStr
         }
 
     };
