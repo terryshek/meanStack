@@ -229,6 +229,16 @@ module.exports = function(app,passport){
 
 
     })
+    app.post('/saveOrder', function(req,res){
+        console.log(req.body)
+        var obj = req.body;
+        var username = obj.username;
+            product.findOneAndUpdate({username:username},obj,function (err, data) {
+                if (err) console.log(err);
+                else console.log('Saved : ', data );
+                res.json({ 'Saved':data });
+            });
+    })
     // ==========================image upload ======================================//
     app.route('/upload')
 

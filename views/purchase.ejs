@@ -27,7 +27,7 @@
                     </div>
                     <div class="col-xs-4">
                         <label for="product_name_{{$index}}">Product Name :</label>
-                        <input type="text" name="product_name_{{$index}}" id="product_name_{{$index}}" ng-model="item.product_name" class="input-small "  required placeholder="Product name!" >
+                        <input type="text" name="product_name_{{$index}}" id="product_name_{{$index}}" ng-model="item.product_name" class="form-control input-small "  required placeholder="Product name!" >
                         <p ng-show="orderForm.product_name_{{$index}}.$invalid && !orderForm.product_name_{{$index}}.$pristine"  class="text-danger">Product name is required.</p>
                         <label for="product_description">Product Description :</label>
                         <textarea ng-model="item.product_description" class="input-small" id="product_description"  placeholder="Product description !" rows="3" cols="75"></textarea>

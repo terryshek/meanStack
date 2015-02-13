@@ -2,54 +2,108 @@
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i
                 class="text-danger fa fa-times"></i></button>
-        <h4 class="modal-title" id="myModalLabel"><i class="text-muted fa fa-shopping-cart"></i> <strong>Order item</strong></h4>
+        <h4 class="modal-title" id="myModalLabel"><i class="text-muted fa fa-shopping-cart"></i> <strong>Order
+            item</strong></h4>
     </div>
-    <form role="form" ng-submit="submitForm(orderDetail.$valid)" id="orderDetail" novalidate autocomplete="off"
+    <form role="form" ng-submit="submitOrderForm(orderDetail.$valid)" id="orderDetail" novalidate autocomplete="off"
           name="orderDetail">
         <div class="modal-body">
-                            <div class="row">
-                                <div class="col-sm-4 col-md-4">
-                                    <img ng-src="{{product.productImg}}" alt="" class="img-rounded img-responsive" />
-                                </div>
-                                <div class="col-sm-8 col-md-8">
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <div class="col-sm-5 col-md-5">
-                                                <label for="product_name">Product Name :</label>
-                                            </div>
-                                            <div class="col-sm-7 col-md-7">
-                                                <input type="text" name="product_name" id="product_name"
-                                                       ng-model="product.product_name" class="input-small " required
-                                                       placeholder="Product name!">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <div class="col-sm-5 col-md-5">
-                                                <label for="product_quantity">Product Quantity :</label>
-                                            </div>
-                                            <div class="col-sm-7 col-md-7">
-                                                <input type="text" numbers-only="numbers-only" id="product_quantity"
-                                                       ng-model="product.product_quanity" required class="input-small" name="product_quanity"
-                                                       maxlength="2">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <p ng-show="orderDetail.product_quanity.$invalid && !orderDetail.product_quanity.$pristine"  class="text-danger">Qty is required.</p>
-                                    <p ng-show="orderDetail.product_name.$invalid && !orderDetail.product_name.$pristine"  class="text-danger">Product name is required.</p>
-                                    <label for="product_description">Product Description :</label>
-                                    <textarea ng-model="item.product_description" class="form-control" id="product_description"  placeholder="Product description !"></textarea>
+            <div class="form-group">
+                <div class="row">
 
+                    <div class="col-sm-4 col-md-4">
+                        <img ng-src="{{product.productImg}}" alt="" class="img-rounded img-responsive"/>
+                    </div>
+                    <div class="col-sm-8 col-md-8">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-5 col-md-5">
+                                    <label for="product_name">Product Name :</label>
+                                </div>
+                                <div class="col-sm-7 col-md-7">
+                                    <input type="text" name="product_name" id="product_name"
+                                           ng-model="product.product_name" class="form-control input-small " required
+                                           placeholder="Product name!">
                                 </div>
                             </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-5 col-md-5">
+                                    <label for="product_quantity">Product Quantity :</label>
+                                </div>
+                                <div class="col-sm-7 col-md-7">
+                                    <input type="number" id="product_quantity"
+                                           ng-model="product.product_quanity" required class="form-control input-small"
+                                           name="product_quanity"
+                                           maxlength="2">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-5 col-md-5">
+                                    <label for="price">Price : </label>
+                                </div>
+                                <div class="col-sm-7 col-md-7">
+                                    <div class="left-inner-addon ">
+                                        <i class="glyphicon glyphicon-usd"></i>
+                                        <input type="number"  id="price"
+                                               ng-model="product.price" required class="form-control input-small"
+                                               name="price"
+                                               maxlength="2">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-5 col-md-5">
+                                    <label for="purchaseStatus">Status : </label>
+                                </div>
+                                <div class="col-sm-7 col-md-7">
+                                    <!--<select id="purchaseStatus" ng-model="product.purchaseStatus" ng-selected="product.purchaseStatus" ng-options="item.status for item in items">-->
+                                    <!--</select>-->
+
+
+                                    <select ng-model="selectStatus" name='purchaseStatus' id="purchaseStatus">
+                                        <option value=''>Select Status</option>
+                                        <option ng-repeat="item in items" value="{{item.value}}" ng-selected="product.purchaseStatus == item.value">{{item.status}}
+                                        </option>
+                                    </select>
+
+
+                                    <!--<select id="purchaseStatus" class="form-control input-sm" name="purchaseStatus"-->
+                                            <!--ng-model="product.purchaseStatus" ng-selected="product.purchaseStatus">-->
+                                        <!--<option value="0">Pending</option>-->
+                                        <!--<option value="1">Confirm</option>-->
+                                        <!--<option value="2">Shipping</option>-->
+                                        <!--<option value="3">Arrived</option>-->
+                                    <!--</select>-->
+                                </div>
+                            </div>
+                        </div>
+                        <p ng-show="orderDetail.price.$invalid && !orderDetail.price.$pristine"
+                                  class="text-danger">Price is required.</p>
+                        <p ng-show="orderDetail.product_quanity.$invalid && !orderDetail.product_quanity.$pristine"
+                           class="text-danger">Qty is required.</p>
+
+                        <p ng-show="orderDetail.product_name.$invalid && !orderDetail.product_name.$pristine"
+                           class="text-danger">Product name is required.</p>
+                        <label for="product_description">Product Description :</label>
+                        <textarea ng-model="product.product_description" class="form-control" id="product_description"
+                                  placeholder="Product description !"></textarea>
+
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="modal-footer">
             <div class="pull-right">
-            <button type="submit" class="btn btn-info btn-block" ng-disabled="orderDetail.$invalid"
-                    ladda="loading">submit change
-            </button>
+                <button type="submit" class="btn btn-info btn-block" ng-disabled="orderDetail.$invalid"
+                        ladda="loading">submit change
+                </button>
             </div>
         </div>
     </form>

@@ -80,7 +80,7 @@ app.service('memberService', function($http, $rootScope, $timeout){
         return $http.post('/purchasing',obj)
     }
     _this.orderList = function(){
-        $http.post("/orderList", this.profileObj).success(function(data){
+        return $http.post("/orderList", this.profileObj).success(function(data){
             console.log(data)
             _this.list = data
             if(_this.list.length <=0){
@@ -116,10 +116,28 @@ app.factory('deferService', function ($q, $rootScope) {
 
             return deferred.promise;
         },
+        orderStatus:function(status){
+            console.log(status)
+            var this_status;
+            switch(status) {
+                case 1:
+                    this_status ="Confirm"
+                    break;
+                case 2:
+                    this_status ="Shipping"
+                    break;
+                case 3:
+                    this_status ="Arrived"
+                    break;
+                default:
+                    this_status ="Pending"
+            }
+            console.log(this_status)
+            return this_status
+        },
         dataForm:function(orderDate){
             date =  new Date(orderDate)
             orderDateStr = date.toDateString() // "Thu Dec 29 2011"
-            console.log(orderDateStr)
             return orderDateStr
         }
 

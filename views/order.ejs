@@ -1,5 +1,6 @@
 <% include main/header %>
 <div class="container" ng-controller="orderCtrl">
+    <toaster-container></toaster-container>
     <!--<div class="row col-md-6 col-md-offset-2 custyle">-->
     <table class="table table-hover custab" >
         <thead>
@@ -15,14 +16,14 @@
             <th>Status</th>
         </tr>
         </thead>
-        <tr ng-repeat="item in filteredList" ng-class="{warning:!item.ans_status, default:item.ans_status}" ng-click="showDetail(item)">
+        <tr ng-repeat="item in filteredList" ng-class="{warning:item.purchaseStatus=0,Success:item.purchaseStatus=1, info:item.purchaseStatus=2,active:item.purchaseStatus=3}" ng-click="showDetail(item)">
             <td>{{$index+1}}</td>
             <td>{{item.product_name}}</td>
             <td>{{item.product_quanity}}</td>
             <td ng-show="!item.price">no price yet!</td>
             <td ng-show="item.price">{{item.price}}</td>
             <td>{{dateFormat(item.created_at)}}</td>
-            <td>{{item.purchaseStatus}}</td>
+            <td>{{orderStatus(item.purchaseStatus)}}</td>
         </tr>
     </table>
     <pagination total-items="totalItems" items-per-page="itemsPerPage"
