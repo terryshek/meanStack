@@ -17,7 +17,7 @@ app.controller('memberlistCtrl', function ($scope, $modal, $log, $http, memberSe
             //==bootsrap ui paging
             $scope.totalItems = newVal.length;
             $scope.itemsPerPage = 10
-            console.log(typeof $scope.currentPage)
+            //console.log(typeof $scope.currentPage)
 
             $scope.currentPage = (typeof $scope.currentPage == 'number') ? $scope.currentPage : 1;
 
@@ -52,7 +52,7 @@ app.controller('memberlistCtrl', function ($scope, $modal, $log, $http, memberSe
         $rootScope.$broadcast("comfirmBox", postObj)
     }
 $scope.open = function (memberObj) {
-    console.log($scope.currentPage)
+    //console.log($scope.currentPage)
     var modalInstance = $modal.open({
         templateUrl: 'view/register.html',
         controller: 'addMemberCtrl',

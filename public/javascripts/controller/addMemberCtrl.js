@@ -1,6 +1,21 @@
 
 app.controller('addMemberCtrl', function($rootScope,$scope, $modalInstance, memberService ,items, $timeout, $upload, toaster){
     $scope.form = items
+
+    // select option sex
+    $scope.options = [{ type: "female", value: false },{ type: "male", value: true }];
+
+    $scope.genderType = $scope.options[Number(items.gender)];
+
+    // select option role
+
+
+    $scope.roleOption = [{ type: "Client", value: false },{ type: "Owner", value: true }];
+
+    $scope.roleType = $scope.roleOption[Number(items.role)];
+
+
+    // default state setting
     $scope.showBtn = ($scope.form.register)?'register':'update';
     $scope.form.gender =(items.register)?true:items.gender;
 
@@ -56,6 +71,9 @@ app.controller('addMemberCtrl', function($rootScope,$scope, $modalInstance, memb
                     console.log(data)
                 })
             }
+            $scope.form.gender = $scope.genderType.value
+            $scope.form.role = $scope.roleType.value
+            console.log($scope.form)
             memberService.update($scope.form).then(function(){
                 console.log("Update success")
                 memberService.getList();

@@ -10,7 +10,7 @@ var flash    = require('connect-flash');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var cors = require('cors')
+var cors = require('cors') // cross domain
 
 // Database
 var mongoose = require('mongoose');
@@ -73,7 +73,7 @@ app.use(busboy());
 // routes ======================================================================
 require('./routes/index')(app, passport); // load our routes and pass in our app and fully configured passport
 
-app.use(vhost('shinychang.net', require('./b.js')));
+//app.use(vhost('shinychang.net', require('./b.js')));
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     console.log("a");

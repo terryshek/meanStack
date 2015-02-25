@@ -80,16 +80,18 @@ app.service('memberService', function($http, $rootScope, $timeout){
         return $http.post('/purchasing',obj)
     }
     _this.orderList = function(){
-        return $http.post("/orderList", this.profileObj).success(function(data){
-            console.log(data)
+        return $http.post("/orderList", this.profileObj)
+            .success(function(data){
+            console.log(_this.list)
             _this.list = data
             if(_this.list.length <=0){
-                console.log("run")
+
                 //toaster.pop('note', "", "No record found!");
                 $timeout(function() {
                     $rootScope.$broadcast('OffloadingModal')
                 }, 1000);
             }
+            console.log(_this.list.length)
         })
     }
     _this.saveOder =function(obj){
@@ -106,10 +108,9 @@ app.service('resourceData', function(){
 })
 app.factory('deferService', function ($q, $rootScope) {
 
-    $rootScope.$broadcast('loadingModal')
-
     return {
         deferredFn: function (fn) {
+            $rootScope.$broadcast('loadingModal')
             var deferred = $q.defer();
 
             deferred.resolve(fn);
@@ -120,6 +121,9 @@ app.factory('deferService', function ($q, $rootScope) {
             console.log(status)
             var this_status;
             switch(status) {
+                case 0:
+                    this_status ="Pending"
+                    break;
                 case 1:
                     this_status ="Confirm"
                     break;
@@ -129,15 +133,13 @@ app.factory('deferService', function ($q, $rootScope) {
                 case 3:
                     this_status ="Arrived"
                     break;
-                default:
-                    this_status ="Pending"
             }
-            console.log(this_status)
-            return this_status
+            //console.log(this_status)
+            return status
         },
         dataForm:function(orderDate){
-            date =  new Date(orderDate)
-            orderDateStr = date.toDateString() // "Thu Dec 29 2011"
+            var date =  new Date(orderDate)
+            var orderDateStr = date.toDateString() // "Thu Dec 29 2011"
             return orderDateStr
         }
 
