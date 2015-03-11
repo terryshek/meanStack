@@ -47,6 +47,10 @@ app.controller('loginCreate', function ($scope, memberService, $modal, $log, $ro
                     window.location.href = '/home';
 
                 } else {
+                    $timeout(function() {
+                        $scope.loading = false; // stop loading
+                        $scope.warning = ""
+                    }, 2000);
                     $scope.warning = response.data.message
                 }
             },
