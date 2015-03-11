@@ -11,6 +11,17 @@
         .hide {
             display: none;
         }
+        .purchase_textarea{
+            /*display: block;*/
+            /*padding: 1em;*/
+            /*margin: auto;*/
+            /*font-size: 1em;*/
+
+            /*height: 12em;*/
+            /*max-height: 12em;*/
+            /*width: 70%;*/
+            /*max-width: 100%;*/
+        }
     </style>
 </head>
 
@@ -25,15 +36,12 @@
             <span class="icon-bar"></span>
         </button>
         <div class="nav navbar-right">
-            <div class="navbar-text" style="vertical-align: top ">
                 <div class="navbar-brand" href="#">Hello, <%= profile.username %>
                     <% if(profile.role){ %>
                     Admin
                     <% } %>
                     <img src="<%=profile.imageUrl%>" class="profile-image img-circle" style="width: 20px; height: auto;display: inline">
                 </div>
-
-            </div>
         </div>
     </div>
     <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'" ng-click="navCollapsed=true">

@@ -50,7 +50,7 @@ app.controller('loginCreate', function ($scope, memberService, $modal, $log, $ro
                     $timeout(function() {
                         $scope.loading = false; // stop loading
                         $scope.warning = ""
-                    }, 2000);
+                    }, 1000);
                     $scope.warning = response.data.message
                 }
             },
