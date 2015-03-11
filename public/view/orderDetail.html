@@ -62,24 +62,14 @@
                                     <label for="purchaseStatus">Status : </label>
                                 </div>
                                 <div class="col-sm-7 col-md-7">
-                                    <!--<select id="purchaseStatus" ng-model="product.purchaseStatus" ng-selected="product.purchaseStatus" ng-options="item.status for item in items">-->
+
+                                    <!--<select ng-model="selectStatus" name='purchaseStatus' id="purchaseStatus">-->
+                                        <!--<option value=''>Select Status</option>-->
+                                        <!--<option ng-repeat="item in items" value="{{item.value}}" ng-selected="product.purchaseStatus == item.value">{{item.status}}-->
+                                        <!--</option>-->
                                     <!--</select>-->
 
-
-                                    <select ng-model="selectStatus" name='purchaseStatus' id="purchaseStatus">
-                                        <option value=''>Select Status</option>
-                                        <option ng-repeat="item in items" value="{{item.value}}" ng-selected="product.purchaseStatus == item.value">{{item.status}}
-                                        </option>
-                                    </select>
-
-
-                                    <!--<select id="purchaseStatus" class="form-control input-sm" name="purchaseStatus"-->
-                                            <!--ng-model="product.purchaseStatus" ng-selected="product.purchaseStatus">-->
-                                        <!--<option value="0">Pending</option>-->
-                                        <!--<option value="1">Confirm</option>-->
-                                        <!--<option value="2">Shipping</option>-->
-                                        <!--<option value="3">Arrived</option>-->
-                                    <!--</select>-->
+                                    <select id="purchaseStatus" data-ng-options="o.status for o in options" data-ng-model="statusType"></select>
                                 </div>
                             </div>
                         </div>

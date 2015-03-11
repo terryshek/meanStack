@@ -81,17 +81,17 @@ app.service('memberService', function($http, $rootScope, $timeout){
     }
     _this.orderList = function(){
         return $http.post("/orderList", this.profileObj)
-            .success(function(data){
-            console.log(_this.list)
-            _this.list = data
-            if(_this.list.length <=0){
+            .then(function(res){
+                _this.list = res.data
 
-                //toaster.pop('note', "", "No record found!");
+                console.log(res.data[0].purchaseStatus)
+            if(_this.list.length <=0){
+                 //toaster.pop('note', "", "No record found!");
                 $timeout(function() {
                     $rootScope.$broadcast('OffloadingModal')
                 }, 1000);
             }
-            console.log(_this.list.length)
+            //console.log(_this.list.length)
         })
     }
     _this.saveOder =function(obj){

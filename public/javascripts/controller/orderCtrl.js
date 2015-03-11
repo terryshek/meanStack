@@ -55,6 +55,7 @@ app.controller('orderCtrl',function($scope, $rootScope, $modal, memberService,$l
        return deferService.dataForm(orderDate)
     };
     $scope.orderStatus = function(status){
+        console.log(status)
         return deferService.orderStatus(status);
 
     };
@@ -64,9 +65,16 @@ app.controller('orderDetailCtrl', function ($scope, items, memberService, $rootS
     console.log(items)
     $scope.product = items
     $scope.items = [{status: 'Pending',value:0 },{ status: 'Confirm',value:1},{ status: 'Shipping',value:2},{ status: 'Arrived',value:3}];
+    //// select option sex
+    $scope.options = [{status: 'Pending',value:0 },{ status: 'Confirm',value:1},{ status: 'Shipping',value:2},{ status: 'Arrived',value:3}];
+    //
+    $scope.statusType = $scope.options[Number(items.purchaseStatus)];
+    console.log($scope.statusType)
+
     $scope.submitOrderForm = function () {
         console.log($scope.selectStatus)
-        $scope.product.purchaseStatus = $scope.selectStatus;
+        //$scope.product.purchaseStatus = $scope.selectStatus;
+        $scope.product.purchaseStatus = $scope.statusType.value
         memberService.saveOder(
             $scope.product
         ).then(function (res) {
