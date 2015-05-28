@@ -1,7 +1,6 @@
 {
   "name": "terry_mean",
   "version": "1.0.0",
-  "description": "",
   "main": "app.js",
   "dependencies": {
     "bcrypt-nodejs": "^0.0.3",
@@ -50,12 +49,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/terryshek/terry_mean.git"
+    "url": "git+https://github.com/terryshek/terry_mean.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/terryshek/terry_mean/issues"
   },
-  "homepage": "https://github.com/terryshek/terry_mean"
+  "homepage": "https://github.com/terryshek/terry_mean",
+  "description": ""
 }

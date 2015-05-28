@@ -13,7 +13,10 @@ app.controller('loginCreate', function ($scope, memberService, $modal, $log, $ro
         imageUrl:'/img/defaultImg.jpg',
         gender:true
     };
-    console.log( $scope.form);
+    $scope.acc = {
+        username:'',
+        password:'',
+    };
     $scope.tabs = [{
         title: 'Login',
         url: 'login.html'
@@ -37,8 +40,9 @@ app.controller('loginCreate', function ($scope, memberService, $modal, $log, $ro
     };
     console.log("loginCreate")
     $scope.submitAccount = function () {
+        console.log($scope.acc)
         $scope.loading = true; // start loading
-        memberService.login($scope.form).then(function (response) {
+        memberService.login($scope.acc).then(function (response) {
                 console.log(response.data);
                 if (response.data.status == 200) {
                     $rootScope.$broadcast('toasterAlert', "Login successful!")
