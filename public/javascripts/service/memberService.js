@@ -38,7 +38,11 @@ app.service('memberService', function($http, $rootScope, $timeout){
     _this.update = function(obj){
         console.log(obj);
         return $http.post(_this.url +"update",obj)
-}
+    }
+    _this.submitPost = function(obj){
+        console.log(obj)
+        return $http.post("/submitPost",obj)
+    }
     _this.upload = function(obj){
         return $http.post("/upload/",obj)
     }

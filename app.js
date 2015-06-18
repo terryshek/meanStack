@@ -67,9 +67,7 @@ app.use(express.static(path.join(__dirname, 'public')));
  Use busboy middleware
  ============================================================ */
 app.use(busboy());
-// ===============routing====================//
-//app.use('/', routes);
-//app.use('/users', member);
+
 // routes ======================================================================
 require('./routes/index')(app, passport); // load our routes and pass in our app and fully configured passport
 

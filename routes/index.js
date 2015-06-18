@@ -4,7 +4,9 @@
 var account = require('../model/userDb.js');
 var product = require('../model/productDb.js');
 var contactQuery = require('../model/msgDb.js');
+var postMsg = require('../model/postDb.js')
 var validateRequest = require('../config/validateRequest.js')
+
 //var upload = require('../upload.js')
 var fs = require('fs-extra');				//File System - for file manipulation
 
@@ -49,7 +51,34 @@ module.exports = function(app,passport){
         //sess.test ="testing";
         res.render('order', { title: 'Welcome to admin Page', profile:req.user ,page:'order',role:req.user.role });
     })
+    app.get("/post",isLoggedIn, function(req, res){
+        console.log("Post page !")
+        //sess.test ="testing";
+        res.render('post', { title: 'Welcome to posrt Page', profile:req.user ,page:'home',role:req.user.role });
+    })
+    app.post("/submitPost", function(req, res, next){
+        var postTip = {
+            usernameId: req.body.usernameId,
+            title:req.body.title,
+            description:req.body.description,
+            imageUrl:req.body.postImg,
+            created_at:req.body.created_at
+        };
+        console.log(postTip)
 
+            var postTips = new postMsg(postTip)
+
+            console.log(postTips)
+        postTips.save(function (err, data) {
+                if (err) console.log(err);
+                else console.log('Saved : ', data );
+                res.json({ 'Saved':data });
+            });
+        //});
+        //res.json({ message: 'post msg success!' });
+
+
+    })
 // =============================================================================
 // AUTHENTICATE (FIRST LOGIN) ==================================================
 // =============================================================================

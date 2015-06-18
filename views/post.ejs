@@ -1,0 +1,51 @@
+<% include main/header %>
+<div class="container" ng-controller="postCtrl">
+    <div class="row">
+
+        <!-- main col left -->
+        <div class="row">
+            <div class="well">
+                <form class="form-horizontal" name="postForm" role="form" ng-submit="submitForm(postForm.$valid)" novalidate autocomplete="off">
+                    <h4>What's New</h4>
+                    <div class="form-group" style="padding:14px;">
+                        <label for="postTitle">Title :</label>
+                        <input type="text" name="postTitle" id="postTitle"
+                               ng-model="post.title" class="form-control input-small " required
+                               placeholder="Post Title !">
+                        <p ng-show="postForm.postTitle.$invalid && !postForm.postTitle.$pristine"
+                           class="text-danger">Post title is required.</p>
+                    </div>
+
+                    <div class="form-group" style="padding:14px;">
+                        <label for="postDescription">Title :</label>
+                        <textarea id="postDescription" class="form-control" name="postDescription" ng-model="post.description" placeholder="Update your status" style="resize: horizontal;"></textarea>
+                        <input type="file" ng-file-select="onFileSelect($files)" accept="image/*"
+                               class="hide" id="productImg">
+                    </div>
+                    <button class="btn btn-primary pull-right" type="submit" ng-disabled="postForm.$invalid">Post</button><ul class="list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a ng-click="clickUpload()"><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
+                </form>
+            </div>
+        </div>
+
+        <!-- main col right -->
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-thumbnail"><img ng-src="{{post.postImg}}" class="img-responsive"></div>
+                <div class="panel-body">
+                    <p class="lead">{{post.title}}</p>
+                    <p>{{post.description}}</p>
+
+                    <!--<p>-->
+                        <!--<img src="https://lh6.googleusercontent.com/-5cTTMHjjnzs/AAAAAAAAAAI/AAAAAAAAAFk/vgza68M4p2s/s28-c-k-no/photo.jpg" width="28px" height="28px">-->
+                        <!--<img src="https://lh4.googleusercontent.com/-6aFMDiaLg5M/AAAAAAAAAAI/AAAAAAAABdM/XjnG8z60Ug0/s28-c-k-no/photo.jpg" width="28px" height="28px">-->
+                        <!--<img src="https://lh4.googleusercontent.com/-9Yw2jNffJlE/AAAAAAAAAAI/AAAAAAAAAAA/u3WcFXvK-g8/s28-c-k-no/photo.jpg" width="28px" height="28px">-->
+                    <!--</p>-->
+                </div>
+            </div>
+
+        </div>
+    </div><!--/row-->
+    <!--</div>-->
+</div>
+
+<% include main/footer.ejs %>
