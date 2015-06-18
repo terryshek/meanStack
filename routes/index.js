@@ -4,7 +4,8 @@
 var account = require('../model/userDb.js');
 var product = require('../model/productDb.js');
 var contactQuery = require('../model/msgDb.js');
-var postMsg = require('../model/postDb.js')
+var postMsg = require('../model/postDb.js');
+
 var validateRequest = require('../config/validateRequest.js')
 
 //var upload = require('../upload.js')
@@ -54,30 +55,7 @@ module.exports = function(app,passport){
     app.get("/post",isLoggedIn, function(req, res){
         console.log("Post page !")
         //sess.test ="testing";
-        res.render('post', { title: 'Welcome to posrt Page', profile:req.user ,page:'home',role:req.user.role });
-    })
-    app.post("/submitPost", function(req, res, next){
-        var postTip = {
-            usernameId: req.body.usernameId,
-            title:req.body.title,
-            description:req.body.description,
-            imageUrl:req.body.postImg,
-            created_at:req.body.created_at
-        };
-        console.log(postTip)
-
-            var postTips = new postMsg(postTip)
-
-            console.log(postTips)
-        postTips.save(function (err, data) {
-                if (err) console.log(err);
-                else console.log('Saved : ', data );
-                res.json({ 'Saved':data });
-            });
-        //});
-        //res.json({ message: 'post msg success!' });
-
-
+        res.render('post', { title: 'Welcome to posrt Page', profile:req.user ,page:'post',role:req.user.role });
     })
 // =============================================================================
 // AUTHENTICATE (FIRST LOGIN) ==================================================
@@ -357,6 +335,40 @@ module.exports = function(app,passport){
             res.json({ 'Saved':data });
         });
     })
+    //post useful tip
+    app.post('/usefulTip',function(req,res){
+        var postTip = {
+            usernameId: req.body.usernameId,
+            title:req.body.title,
+            description:req.body.description,
+            imageUrl:req.body.postImg,
+            created_at:req.body.created_at
+        }
+        var postTips = new postMsg(postTip)
+        postTips.save(function (err, data) {
+            if (err) console.log(err);
+            else console.log('Saved : ', data );
+            res.json({ 'Saved':data });
+        });
+    })
+    app.get('/getAllPost', function(req,res){
+        postMsg.find({}).sort( { "created_at": -1 }).find(function (err, todos) {
+            if (err) return next(err);
+            var response = []
+            for(var index in todos){
+                account.findById(todos[index]["usernameId"], function (err, doc){
+                    var result = {
+                        data :todos[index],
+                        profile :doc
+                    }
+                    response.push(result)
+                    res.json(response);
+                });
+            }
+
+        });
+    })
+
 //====================================post purchase product =================================//
     app.post('/purchasing',function(req,res){
         var productObj = req.body;

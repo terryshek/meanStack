@@ -14,8 +14,18 @@ app.controller("postCtrl",function($scope,$rootScope,memberService,$modal,$uploa
     $scope.submitForm = function(formValid){
         console.log(formValid)
         console.log($scope.post)
-        memberService.update($scope.post).then(function(data){
+        memberService.submitPost($scope.post).then(function(data){
             console.log(data)
+            if(data.status ==200){
+                $scope.post={
+                    usernameId: memberService.profileObj._id,
+                    title:"",
+                    description:"",
+                    postImg:"",
+                    created_at:Date.now()
+                }
+                $rootScope.$broadcast('toasterAlert', "post successful!")
+            }
         })
     }
     // =========================================================upload img===============================================================//
