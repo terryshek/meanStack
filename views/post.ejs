@@ -4,6 +4,7 @@
 
         <!-- main col left -->
         <div class="row">
+            <toaster-container></toaster-container>
             <div class="well">
                 <form class="form-horizontal" name="postForm" role="form" ng-submit="submitForm(postForm.$valid)" novalidate autocomplete="off">
                     <h4>What's New</h4>
@@ -30,16 +31,12 @@
         <!-- main col right -->
         <div class="row">
             <div class="panel panel-default">
-                <div class="panel-thumbnail"><img ng-src="{{post.postImg}}" class="img-responsive"></div>
+                <div class="panel-thumbnail">
+                    <img ng-src="{{post.postImg}}" ng-show="post.postImg" class="img-responsive">
+                </div>
                 <div class="panel-body">
                     <p class="lead">{{post.title}}</p>
                     <p>{{post.description}}</p>
-
-                    <!--<p>-->
-                        <!--<img src="https://lh6.googleusercontent.com/-5cTTMHjjnzs/AAAAAAAAAAI/AAAAAAAAAFk/vgza68M4p2s/s28-c-k-no/photo.jpg" width="28px" height="28px">-->
-                        <!--<img src="https://lh4.googleusercontent.com/-6aFMDiaLg5M/AAAAAAAAAAI/AAAAAAAABdM/XjnG8z60Ug0/s28-c-k-no/photo.jpg" width="28px" height="28px">-->
-                        <!--<img src="https://lh4.googleusercontent.com/-9Yw2jNffJlE/AAAAAAAAAAI/AAAAAAAAAAA/u3WcFXvK-g8/s28-c-k-no/photo.jpg" width="28px" height="28px">-->
-                    <!--</p>-->
                 </div>
             </div>
 

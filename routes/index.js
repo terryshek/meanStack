@@ -5,20 +5,21 @@ var account = require('../model/userDb.js');
 var product = require('../model/productDb.js');
 var contactQuery = require('../model/msgDb.js');
 var postMsg = require('../model/postDb.js');
+var comment = require('../model/commentDb.js');
 
 var validateRequest = require('../config/validateRequest.js')
 
 //var upload = require('../upload.js')
 var fs = require('fs-extra');				//File System - for file manipulation
 
-module.exports = function(app,passport){
+module.exports = function(app, passport){
     /* GET home page. */
     console.log("admin page !")
     app.get('/admin',isLoggedIn, function(req, res) {
         res.render('index', { title: 'Welcome to admin Page', profile:req.user, page:'admin',role:req.user.role });
     });
     app.get('/contact',isLoggedIn, function(req, res) {
-        res.render('contact', { title: 'Welcome to admin Page', profile:req.user, page:'contact',role:req.user.role});
+        res.render('contact', { title: 'Welcome to contact Page', profile:req.user, page:'contact',role:req.user.role});
     });
 
 // the main entry
@@ -55,7 +56,12 @@ module.exports = function(app,passport){
     app.get("/post",isLoggedIn, function(req, res){
         console.log("Post page !")
         //sess.test ="testing";
-        res.render('post', { title: 'Welcome to posrt Page', profile:req.user ,page:'post',role:req.user.role });
+        res.render('post', { title: 'Welcome to post Page', profile:req.user ,page:'post',role:req.user.role });
+    })
+    app.get("/comment",isLoggedIn, function(req, res){
+        console.log("comment page !")
+        //sess.test ="testing";
+        res.render('postComment', { title: 'Welcome to comment Page', profile:req.user ,page:'comment',role:req.user.role });
     })
 // =============================================================================
 // AUTHENTICATE (FIRST LOGIN) ==================================================
@@ -108,6 +114,13 @@ module.exports = function(app,passport){
         console.log(req.user)
         res.json(req.user);
     });
+    app.get('/getAllProfile', function(req, res) {
+        console.log(req.user)
+        account.find({}, function(err, users){
+            res.json(users);
+        })
+    });
+
 
     // LOGOUT ==============================
     app.get('/logout', function(req, res) {
@@ -123,6 +136,12 @@ module.exports = function(app,passport){
                 res.json(todos);
             });
         })
+    });
+    app.get('/list', function(req,res) {
+            account.find({}).sort( { "created_at": -1 }).find(function (err, todos) {
+                if (err) return next(err);
+                res.json(todos);
+            });
     });
     // all query
     app.post('/querylist', function(req,res) {
@@ -335,6 +354,18 @@ module.exports = function(app,passport){
             res.json({ 'Saved':data });
         });
     })
+    app.post('/postComment', function(req,res){
+        var postComment = new comment({
+            commentId: req.user._id,
+            postId:req.body.post_id,
+            description:req.body.post_comment
+        })
+        postComment.save(function (err, data) {
+            if (err) console.log(err);
+            else console.log('Saved : ', data );
+            res.json({ 'Saved':"saved" });
+        });
+    })
     //post useful tip
     app.post('/usefulTip',function(req,res){
         var postTip = {
@@ -354,18 +385,7 @@ module.exports = function(app,passport){
     app.get('/getAllPost', function(req,res){
         postMsg.find({}).sort( { "created_at": -1 }).find(function (err, todos) {
             if (err) return next(err);
-            var response = []
-            for(var index in todos){
-                account.findById(todos[index]["usernameId"], function (err, doc){
-                    var result = {
-                        data :todos[index],
-                        profile :doc
-                    }
-                    response.push(result)
-                    res.json(response);
-                });
-            }
-
+            res.json(todos);
         });
     })
 

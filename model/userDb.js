@@ -12,6 +12,7 @@ var UserSchema = new mongoose.Schema({
     imageUrl:{type:String, default:"img/defaultImg.jpg"},
     role:{type:Boolean,default:false},
     created_at: { type : Date },
+    post : [{type : mongoose.Schema.Types.ObjectId, ref : 'postMsg'}],
     updated_at: { type: Date, default: Date.now }
 });
 // generating a hash

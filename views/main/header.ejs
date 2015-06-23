@@ -51,15 +51,18 @@
             <li ng-class="{ active: isActive('home')}"><a href="/home">Home</a></li>
 
             <li ng-class="{ active: isActive('post')}"><a href="/post">Post</a></li>
-            <% if (role) { %>
+
             <li ng-class="{ active: isActive('admin')}"><a href="/admin">admin</a></li>
-            <% } %>
+
+            <li ng-class="{ active: isActive('comment')}"><a href="/comment">Comment</a></li>
+
             <!--<li ng-class="{ active: isActive('purchase')}"><a href="/purchase">Purchase</a></li>-->
             <% if(!role){ %>
             <li ng-class="{ active: isActive('contact')}"><a href="/contact">contact</a></li>
             <% } %>
         </ul>
-        <p class="navbar-btn">
+
+        <p class="navbar-btn padding">
             <button ng-click="logout()" class="btn btn-danger pull-right">Log out</button>
         </p>
     </div>

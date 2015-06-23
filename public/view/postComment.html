@@ -1,0 +1,21 @@
+<!-- for dialog used -->
+<!--<div class="modal-header">-->
+    <!--<button type="button" ng-click="close()" class="close" data-dismiss="modal" aria-hidden="true">×</button>-->
+    <!--<h3 id="myModalLabel">{{title}}</h3>-->
+<!--</div>-->
+<div class="modal-body well" style="margin: 0">
+        <form class="form-horizontal" role="form" name="commentForm" ng-submit="commentFormSubmit(commentForm.$valid)">
+            <h4>What's New</h4>
+            <div class="form-group" style="padding:14px;" ng-class="{ 'has-error' : commentForm.post_comment.$invalid && !commentForm.post_comment.$pristine }">
+                <textarea class="form-control" placeholder="Place your comment" name="post_comment" ng-model="post_comment.post_comment" required></textarea>
+                <p ng-show="commentForm.post_comment.$invalid && !commentForm.post_comment.$pristine" class="help-block">Comment content is
+                    required.</p>
+            </div>
+            <button class="btn btn-primary pull-right" type="submit" ng-disabled="commentForm.$invalid">Post</button><ul class="list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
+        </form>
+</div>
+<!--<div class="modal-footer">-->
+    <!--<button class="btn" data-dismiss="modal" aria-hidden="true" ng-click="close()">Cancel</button>-->
+    <!--<button class="btn btn-danger" data-dismiss="modal" ng-click="confirm()">Delete</button>-->
+<!--</div>-->
+<!-- for dialog used -->

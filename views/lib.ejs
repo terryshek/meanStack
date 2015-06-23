@@ -26,6 +26,7 @@
 <script src="javascripts/controller/purchaseCtrl.js"></script>
 <script src="javascripts/controller/orderCtrl.js"></script>
 <script src="javascripts/controller/postCtrl.js"></script>
+<script src="javascripts/controller/commentCtrl.js"></script>
 
 <script type="application/javascript">
     app.controller("headerController", function ($scope, $location, memberService, $rootScope, localStorageService, $cacheFactory, $templateCache) {
@@ -62,6 +63,7 @@
 
         });
         $scope.$watch(function () {
+                    console.log(memberService.list)
                     return memberService.list;
                 },
                 function (newVal, oldVal) {
