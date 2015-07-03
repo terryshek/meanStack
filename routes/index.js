@@ -6,6 +6,8 @@ var product = require('../model/productDb.js');
 var contactQuery = require('../model/msgDb.js');
 var postMsg = require('../model/postDb.js');
 var comment = require('../model/commentDb.js');
+var like = require('../model/likeDb.js');
+
 
 var validateRequest = require('../config/validateRequest.js')
 
@@ -88,7 +90,10 @@ module.exports = function(app, passport){
             if (!user) { return res.send({'status':1001,'message':msg}); }
             req.logIn(user, function(err) {
                 if (err) { return res.send({'status':'err','message':err.message}); }
-                return res.send({'status':'200', msg:"login success", profile:user});
+                account.find({}, function(err, users){
+                    if (err) return next(err);
+                    return res.send({'status':'200', msg:"login success", allProfile:users, this_profile:user });
+                })
             });
         })(req, res, next)
     });
@@ -117,6 +122,7 @@ module.exports = function(app, passport){
     app.get('/getAllProfile', function(req, res) {
         console.log(req.user)
         account.find({}, function(err, users){
+            if (err) return next(err);
             res.json(users);
         })
     });
@@ -301,7 +307,7 @@ module.exports = function(app, passport){
 
                 //Path where image will be uploaded
                 console.log(__dirname)
-                fstream = fs.createWriteStream(__dirname + '/../public/img/' + filename);	//create a writable stream
+                fstream = fs.createWriteStream("http://q67457789.myqnapcloud.com/learningAppImg/" + filename);	//create a writable stream
 
                 file.pipe(fstream);		//pipe the post data to the file
 
@@ -310,7 +316,7 @@ module.exports = function(app, passport){
                 req.on('end', function () {
                     //console.log(fstream)
                     res.writeHead(200, {"content-type":"text/html"});		//http response header
-                    res.end(JSON.stringify({msg:"upload success",path:'/img/' + filename}));							//http response body - send json data
+                    res.end(JSON.stringify({msg:"upload success",path:"http://q67457789.myqnapcloud.com/learningAppImg/" + filename}));							//http response body - send json data
                 });
 
                 //Finished writing to stream
@@ -355,15 +361,52 @@ module.exports = function(app, passport){
         });
     })
     app.post('/postComment', function(req,res){
+        console.log(req.body)
+        //console.log(req.user)
+
         var postComment = new comment({
-            commentId: req.user._id,
-            postId:req.body.post_id,
-            description:req.body.post_comment
+            category:req.body.category,
+            type:req.body.type,
+            postId:req.body.post_link,
+            commentBy:req.body.commentBy,
+            comment:req.body.comment
         })
         postComment.save(function (err, data) {
             if (err) console.log(err);
             else console.log('Saved : ', data );
-            res.json({ 'Saved':"saved" });
+            res.json({ 'status':200, "saved":data });
+        });
+    })
+    app.post('/getComment', function(req,res){
+        console.log(req.body);
+        comment.find(req.body).sort( { "created_at": -1 }).find(function (err, comments) {
+            if (err) return next(err);
+            res.json(comments);
+        });
+    })
+    // like post
+    app.post('/likePost', function(req,res){
+        console.log(req.body)
+        //console.log(req.user)
+
+        var doLikePost = new like({
+            category:req.body.category,
+            type:req.body.type,
+            postId:req.body.post_link,
+            likeBy:req.body.likeBy,
+        })
+        console.log(doLikePost)
+        doLikePost.save(function (err, data) {
+            if (err) console.log(err);
+            else console.log('Saved : ', data );
+            res.json({ 'status':200, saved:data});
+        });
+    })
+    app.post('/getLikePost', function(req,res){
+        console.log(req.body);
+        like.find(req.body).sort({ "created_at": -1 }).find(function (err, likes) {
+            if (err) return next(err);
+            res.json(likes);
         });
     })
     //post useful tip

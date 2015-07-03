@@ -3,15 +3,14 @@
  */
 var mongoose = require('mongoose');
 //var bcrypt   = require('bcrypt-nodejs');
-var postSchema= new mongoose.Schema({
+var likeSchema= new mongoose.Schema({
     category:String,
     type:String,
     postId:String,
-    commentBy:String,
-    comment:String,
+    likeBy:String,
     created_at:{ type: Date, default: Date.now }
 });
 
-module.exports = mongoose.model('comment', postSchema);
+module.exports = mongoose.model('like', likeSchema);
 
 
