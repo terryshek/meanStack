@@ -34,9 +34,10 @@ app.service('memberService', function($http, $rootScope, $timeout){
                 $http.post(_this.url+"userlist", {username:res.username}).
                     success(function(data, status, headers, config) {
                         _this.list = data;
-
-                        $http.get("/getAllPost").
+                        $http.post("/getComment", {}).
                             success(function (res) {
+                                console.log(res)
+                                console.log(_this.list)
                                 if(res.length >0)
                                 {
                                     var posts = res
@@ -44,7 +45,7 @@ app.service('memberService', function($http, $rootScope, $timeout){
                                         _this.postList=[];
                                         for(var post in posts){
                                             for(var user in _this.list){
-                                                if(_this.list[user]["_id"]==posts[post]["usernameId"]){
+                                                if(_this.list[user]["_id"]==posts[post]["commentBy"]){
                                                     var result ={
                                                         data:posts[post],
                                                         profile:_this.list[user]

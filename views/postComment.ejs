@@ -15,8 +15,10 @@
         <tr>
             <th>#</th>
             <th>Post Person</th>
+            <th>Name</th>
             <th></th>
             <th>Post Title</th>
+            <th>Category</th>
             <th>Type</th>
             <th style="width: 36px;"></th>
         </tr>
@@ -30,7 +32,10 @@
                 <a ng-click="open(post.data)" title="Place comment on it">{{post.data.title | limitTo: 100}}{{ post.data.title.length > 10 ? '&hellip;' : '' }}</a>
             </td>
             <td>
-                {{postTyle}}
+                {{post.data.category}}
+            </td>
+            <td>
+                {{post.data.type}}
             </td>
             <td>
                 <!-- Indicates a dangerous or potentially negative action -->
