@@ -7,6 +7,7 @@ var contactQuery = require('../model/msgDb.js');
 var postMsg = require('../model/postDb.js');
 var comment = require('../model/commentDb.js');
 var like = require('../model/likeDb.js');
+var task = require('../model/taskDb.js');
 
 
 var validateRequest = require('../config/validateRequest.js')
@@ -324,7 +325,7 @@ module.exports = function(app, passport){
                     console.log('Finished writing!');
 
                     //Get file stats (including size) for file saved to server
-                    fs.stat(__dirname + '/../public/img/' + filename, function(err, stats) {
+                    fs.stat("http://q67457789.myqnapcloud.com/learningAppImg/" + filename, function(err, stats) {
                         if(err)
                             throw err;
                         //if a file
@@ -363,7 +364,6 @@ module.exports = function(app, passport){
     app.post('/postComment', function(req,res){
         console.log(req.body)
         //console.log(req.user)
-
         var postComment = new comment({
             category:req.body.category,
             type:req.body.type,
@@ -407,6 +407,40 @@ module.exports = function(app, passport){
         like.find(req.body).sort({ "created_at": -1 }).find(function (err, likes) {
             if (err) return next(err);
             res.json(likes);
+        });
+    })
+    // contribution
+    app.post('/getLikePost', function(req,res){
+        console.log(req.body);
+        like.find(req.body).sort({ "created_at": -1 }).find(function (err, likes) {
+            if (err) return next(err);
+            res.json(likes);
+        });
+    })
+       // like post
+    app.post('/setfinishTask', function(req,res){
+        console.log(req.body)
+        //console.log(req.user)
+
+        var finishStatus = new task({
+            category:req.body.category,
+            type:req.body.type,
+            postId:req.body.postId,
+            personId:req.body.personId,
+            finish:req.body.likeBy,
+        })
+        console.log(finishStatus)
+        finishStatus.save(function (err, data) {
+            if (err) console.log(err);
+            else console.log('Saved : ', data );
+            res.json({ 'status':200, saved:data});
+        });
+    })
+    app.post('/getFinishTask', function(req,res){
+        console.log(req.body);
+        task.find(req.body).sort({ "created_at": -1 }).find(function (err, task) {
+            if (err) return next(err);
+            res.json(task);
         });
     })
     //post useful tip
