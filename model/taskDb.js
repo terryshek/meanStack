@@ -10,8 +10,7 @@ var taskSchema= new mongoose.Schema({
     personId:String,
     finish:{type:Boolean,default:false},
     created_at:{ type: Date, default: Date.now }
-});
-
+})
 module.exports = mongoose.model('task', taskSchema);
 
 
