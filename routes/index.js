@@ -8,6 +8,7 @@ var postMsg = require('../model/postDb.js');
 var comment = require('../model/commentDb.js');
 var like = require('../model/likeDb.js');
 var task = require('../model/taskDb.js');
+var bcrypt   = require('bcrypt-nodejs');
 
 
 var validateRequest = require('../config/validateRequest.js')
@@ -115,6 +116,28 @@ module.exports = function(app, passport){
                 res.json({ message: true });
             }
         })
+    })
+    app.post('/learningApp/addUser', function(req, res){
+        var postData = req.body
+        console.log(postData);
+        var newUser = new account({
+            username: postData.username,
+            password: bcrypt.hashSync(postData.password, bcrypt.genSaltSync(8)),
+            email : postData.email,
+            gender:postData.gender,
+            fullname:postData.fullname,
+            contact:postData.contact,
+            location:postData.location,
+            imageUrl:postData.imageUrl,
+            created_at:new Date()
+        })
+        console.log(newUser)
+        ;
+        newUser.save(function (err, data) {
+            if (err) console.log(err);
+            else console.log('Saved : ', data );
+            res.json({ 'Saved':data });
+        });
     })
     app.get('/getProfile', function(req, res) {
         console.log(req.user)
