@@ -9,10 +9,24 @@ var comment = require('../model/commentDb.js');
 var like = require('../model/likeDb.js');
 var task = require('../model/taskDb.js');
 var bcrypt   = require('bcrypt-nodejs');
+var nodemailer = require("nodemailer");
 
 
 var validateRequest = require('../config/validateRequest.js')
 
+
+/*
+ Here we are configuring our SMTP Server details.
+ STMP is mail server which is responsible for sending and recieving email.
+ */
+var smtpTransport = nodemailer.createTransport("SMTP",{
+    service: "Gmail",
+    auth: {
+        user: "terryashekhinshing@gmail.com",
+        pass: "Fredew33"
+    }
+});
+/*------------------SMTP Over-----------------------------*/
 //var upload = require('../upload.js')
 var fs = require('fs-extra');				//File System - for file manipulation
 
@@ -100,6 +114,26 @@ module.exports = function(app, passport){
         })(req, res, next)
     });
 
+        app.post('/sendMail',function(req,res){
+            console.log(res.body);
+            var mailOptions={
+                to : res.body.to,
+                from: res.body.from,
+                subject : res.body.subject,
+                text : res.body.content
+            }
+            console.log(mailOptions);
+            smtpTransport.sendMail(mailOptions, function(error, response){
+                if(error){
+                    console.log(error);
+                    res.end("error");
+                }else{
+                    console.log("Message sent: " + response.message);
+                    res.end("sent");
+                }
+            });
+            //res.end("send")
+        });
     //// process the signup form
     app.post('/users/adduser', passport.authenticate('local-signup', {
         successRedirect : '/admin', // redirect to the secure profile section
@@ -117,6 +151,7 @@ module.exports = function(app, passport){
             }
         })
     })
+
     app.post('/learningApp/addUser', function(req, res){
         var postData = req.body
         console.log(postData);
@@ -138,6 +173,16 @@ module.exports = function(app, passport){
             else console.log('Saved : ', data );
             res.json({ 'Saved':data });
         });
+    })
+    app.get("/searchData", function(req, res){
+        postMsg.find({}, function(err, posts){
+            if (err) return next(err);
+            comment.find({},function(err, comments){
+                if (err) return next(err);
+                res.json(posts);
+            })
+
+        })
     })
     app.get('/getProfile', function(req, res) {
         console.log(req.user)
@@ -331,7 +376,7 @@ module.exports = function(app, passport){
 
                 //Path where image will be uploaded
                 console.log(__dirname)
-                fstream = fs.createWriteStream("http://q67457789.myqnapcloud.com/learningAppImg/" + filename);	//create a writable stream
+                fstream = fs.createWriteStream(__dirname + '/../public/img/' + filename);	//create a writable stream
 
                 file.pipe(fstream);		//pipe the post data to the file
 
@@ -340,7 +385,7 @@ module.exports = function(app, passport){
                 req.on('end', function () {
                     //console.log(fstream)
                     res.writeHead(200, {"content-type":"text/html"});		//http response header
-                    res.end(JSON.stringify({msg:"upload success",path:"http://q67457789.myqnapcloud.com/learningAppImg/" + filename}));							//http response body - send json data
+                    res.end(JSON.stringify({msg:"upload success",path:'/img/' + filename}));							//http response body - send json data
                 });
 
                 //Finished writing to stream
@@ -348,7 +393,7 @@ module.exports = function(app, passport){
                     console.log('Finished writing!');
 
                     //Get file stats (including size) for file saved to server
-                    fs.stat("http://q67457789.myqnapcloud.com/learningAppImg/" + filename, function(err, stats) {
+                    fs.stat(__dirname + '/../public/img/' + filename, function(err, stats) {
                         if(err)
                             throw err;
                         //if a file
@@ -400,6 +445,7 @@ module.exports = function(app, passport){
             res.json({ 'status':200, "saved":data });
         });
     })
+
     app.post('/getComment', function(req,res){
         console.log(req.body);
         comment.find(req.body).sort( { "created_at": -1 }).find(function (err, comments) {
@@ -483,7 +529,7 @@ module.exports = function(app, passport){
         });
     })
     app.get('/getAllPost', function(req,res){
-        postMsg.find({}).sort( { "created_at": -1 }).find(function (err, todos) {
+        postMsg.find({}).sort( { "date": -1 }).find(function (err, todos) {
             if (err) return next(err);
             res.json(todos);
         });

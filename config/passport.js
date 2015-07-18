@@ -2,13 +2,13 @@
  * Created by terryshek on 8/1/15.
  */
 // load all the things we need
-var LocalStrategy    = require('passport-local').Strategy;
-var bcrypt   = require('bcrypt-nodejs');
-
+var LocalStrategy = require('passport-local').Strategy;
+var superagent = require('superagent');
+var postSchema = require("../model/postDb");
 // load up the user model
 var User = require('../model/userDb');
 
-module.exports =function(passport){
+module.exports = function (passport) {
     console.log("passport")
     // =========================================================================
     // passport session setup ==================================================
@@ -17,13 +17,13 @@ module.exports =function(passport){
     // passport needs ability to serialize and unserialize users out of session
 
     // used to serialize the user for the session
-    passport.serializeUser(function(user, done) {
+    passport.serializeUser(function (user, done) {
         done(null, user.id);
     });
 
     // used to deserialize the user
-    passport.deserializeUser(function(id, done) {
-        User.findById(id, function(err, user) {
+    passport.deserializeUser(function (id, done) {
+        User.findById(id, function (err, user) {
             done(err, user);
         });
     });
@@ -34,19 +34,19 @@ module.exports =function(passport){
     // =========================================================================
     passport.use('local-login', new LocalStrategy({
             // by default, local strategy uses username and password, we will override with email
-            usernameField : 'username',
-            passwordField : 'password',
-            passReqToCallback : true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
+            usernameField: 'username',
+            passwordField: 'password',
+            passReqToCallback: true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
         },
-        function(req, email, password, done) {
+        function (req, email, password, done) {
             console.log(email)
             console.log(password)
             if (email)
                 email = email.toLowerCase(); // Use lower-case e-mails to avoid case-sensitive e-mail matching
 
             // asynchronous
-            process.nextTick(function() {
-                User.findOne({ 'username' :  email }, function(err, user) {
+            process.nextTick(function () {
+                User.findOne({'username': email}, function (err, user) {
                     // if there are any errors, return the error
                     if (err)
                         return done(err);
@@ -55,15 +55,46 @@ module.exports =function(passport){
                     if (!user)
                         return done(null, false, req.flash('loginMessage', 'No user found.'));
 
-                    if (!user.validPassword(password, user.password)){
+                    if (!user.validPassword(password, user.password)) {
                         console.log("run")
                         return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));
                     }
 
 
                     // all is well, return user
-                    else{
-                        return done(null, user);
+                    else {
+                        //
+                        postSchema.remove({}, function (err) {
+                            if (err) {
+                                console.log(err)
+                            } else {
+                                superagent.get("http://q67457789.myqnapcloud.com/wp/lfut/feed/json")
+                                    .end(function (err, response) {
+                                        if (response.ok) {
+                                            for(var index in response.body){
+                                                var newPost = new postSchema({
+                                                    id: response.body[index]["id"],
+                                                    title: response.body[index]["title"],
+                                                    permalink: response.body[index]["permalink"],
+                                                    content: response.body[index]["content"],
+                                                    excerpt: response.body[index]["excerpt"],
+                                                    date: response.body[index]["date"],
+                                                    author: response.body[index]["author"],
+                                                    categories: response.body[index]["categories"],
+                                                    tags: response.body[index]["tags"]
+                                                })
+                                                console.log(newPost)
+                                                newPost.save(function (err, data) {
+                                                    if (err) console.log(err);
+                                                    else console.log('Saved : ', data );
+                                                    console.log(data);
+                                                    return done(null, user);
+                                                });
+                                            }
+                                        }
+                                    })
+                            }
+                        })
                     }
 
                 });
@@ -76,10 +107,11 @@ module.exports =function(passport){
     // =========================================================================
     passport.use('local-signup', new LocalStrategy({
             // by default, local strategy uses username and password, we will override with email
-            usernameField : 'username',
-            passwordField : 'password'
+            usernameField: 'username',
+            passwordField: 'password',
+            passReqToCallback: true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
         },
-        function(req, email, password, done) {
+        function (req, email, password, done) {
             console.log(email)
             console.log(password)
             console.log(req.body)
@@ -87,10 +119,10 @@ module.exports =function(passport){
                 email = email.toLowerCase(); // Use lower-case e-mails to avoid case-sensitive e-mail matching
 
             // asynchronous
-            process.nextTick(function() {
+            process.nextTick(function () {
                 // if the user is not already logged in:
                 if (req.body) {
-                    User.findOne({ 'username' :  email }, function(err, user) {
+                    User.findOne({'username': email}, function (err, user) {
                         // if there are any errors, return the error
                         if (err)
                             return done(err);
@@ -100,33 +132,53 @@ module.exports =function(passport){
                             return done(null, false, req.flash('signupMessage', 'That username is already taken.'));
                         } else {
                             console.log("new user creating!")
-                            var postData = req.body;
+                            postData = req.body;
                             console.log(req.body)
                             // create the user
-                            var newUser = new User({
-                                username: postData.username,
-                                password: bcrypt.hashSync(postData.password, bcrypt.genSaltSync(8)),
-                                email : postData.email,
-                                gender:postData.gender,
-                                fullname:postData.fullname,
-                                contact:postData.contact,
-                                location:postData.location,
-                                imageUrl:postData.imageUrl,
-                                created_at:new Date()
-                            })
-                            console.log(newUser)
-                            ;
-                            newUser.save(function(err) {
-                                if (err)
-                                    return done(err);
+                            var newUser = new User();
+                            newUser.username = postData.username;
+                            newUser.password = newUser.generateHash(password);
+                            newUser.email = postData.email,
+                                newUser.gender = postData.gender,
+                                newUser.fullname = postData.fullname,
+                                newUser.contact = postData.contact,
+                                newUser.location = postData.location,
+                                newUser.imageUrl = postData.imageUrl,
+                                newUser.created_at = new Date(),
+                                newUser.save(function (err) {
+                                    if (err)
+                                        return done(err);
 
-                                return done(null, newUser);
-                            });
+                                    return done(null, newUser);
+                                });
                         }
 
                     });
                     // if the user is logged in but has no local account...
                 }
+                //else if ( !req.user.local.email ) {
+                //    // ...presumably they're trying to connect a local account
+                //    // BUT let's check if the email used to connect a local account is being used by another user
+                //    User.findOne({ 'local.email' :  email }, function(err, user) {
+                //        if (err)
+                //            return done(err);
+                //
+                //        if (user) {
+                //            return done(null, false, req.flash('loginMessage', 'That email is already taken.'));
+                //            // Using 'loginMessage instead of signupMessage because it's used by /connect/local'
+                //        } else {
+                //            var user = req.user;
+                //            user.local.email = email;
+                //            user.local.password = user.generateHash(password);
+                //            user.save(function (err) {
+                //                if (err)
+                //                    return done(err);
+                //
+                //                return done(null,user);
+                //            });
+                //        }
+                //    });
+                //}
                 else {
                     // user is logged in and already has a local account. Ignore signup. (You should log out before trying to create a new account, user!)
                     return done(null, req.user);
