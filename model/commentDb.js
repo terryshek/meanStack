@@ -6,7 +6,7 @@ var mongoose = require('mongoose');
 var postSchema= new mongoose.Schema({
     category:String,
     type:String,
-    postId:String,
+    postId:Number,
     commentBy:String,
     comment:String,
     created_at:{ type: Date, default: Date.now }

@@ -478,14 +478,14 @@ module.exports = function(app, passport){
             res.json(likes);
         });
     })
-    // contribution
-    app.post('/getLikePost', function(req,res){
-        console.log(req.body);
-        like.find(req.body).sort({ "created_at": -1 }).find(function (err, likes) {
-            if (err) return next(err);
-            res.json(likes);
-        });
-    })
+    //// contribution
+    //app.post('/getLikePost', function(req,res){
+    //    console.log(req.body);
+    //    like.find(req.body).sort({ "created_at": -1 }).find(function (err, likes) {
+    //        if (err) return next(err);
+    //        res.json(likes);
+    //    });
+    //})
        // like post
     app.post('/setfinishTask', function(req,res){
         console.log(req.body)
@@ -528,8 +528,9 @@ module.exports = function(app, passport){
             res.json({ 'Saved':data });
         });
     })
-    app.get('/getAllPost', function(req,res){
-        postMsg.find({}).sort( { "date": -1 }).find(function (err, todos) {
+    app.post('/getAllPost', function(req,res){
+        console.log(req.body)
+        postMsg.find(req.body).sort( { "date": -1 }).find(function (err, todos) {
             if (err) return next(err);
             res.json(todos);
         });

@@ -6,7 +6,7 @@ var mongoose = require('mongoose');
 var likeSchema= new mongoose.Schema({
     category:String,
     type:String,
-    postId:String,
+    postId:Number,
     likeBy:String,
     created_at:{ type: Date, default: Date.now }
 });
