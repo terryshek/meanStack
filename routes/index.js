@@ -97,9 +97,9 @@ module.exports = function(app, passport){
     // process the login form
     app.post('/login',function(req, res, next) {
         passport.authenticate('local-login', function(err, user, info) {
-            console.log(user)
+            //console.log(user)
             msg = req.flash('loginMessage')[0]
-            console.log(msg)
+            //console.log(msg)
 
             console.log('authenticate callback');
             if (err) { return res.send({'status':'err','message':err}); }
@@ -141,7 +141,7 @@ module.exports = function(app, passport){
         failureFlash : true // allow flash messages
     }));
     app.post('/users/checkExit', function(req,res){
-        console.log(req.body)
+        //console.log(req.body)
         account.findOne(req.body, function(err, post){
             if (err) return next(err);
             if(post){
@@ -154,7 +154,7 @@ module.exports = function(app, passport){
 
     app.post('/learningApp/addUser', function(req, res){
         var postData = req.body
-        console.log(postData);
+        //console.log(postData);
         var newUser = new account({
             username: postData.username,
             password: bcrypt.hashSync(postData.password, bcrypt.genSaltSync(8)),
@@ -164,6 +164,7 @@ module.exports = function(app, passport){
             contact:postData.contact,
             location:postData.location,
             imageUrl:postData.imageUrl,
+            preference : postData.preference,
             created_at:new Date()
         })
         console.log(newUser)

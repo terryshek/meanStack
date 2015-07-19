@@ -5,6 +5,7 @@ var UserSchema = new mongoose.Schema({
     gender:Boolean,
     fullname: String,
     phone:{type:Number, default:23456789},
+    preference:[],
     email:String,
     contact:Number,
     password: String,

@@ -70,6 +70,7 @@ module.exports = function (passport) {
                             } else {
                                 superagent.get("http://q67457789.myqnapcloud.com/wp/lfut/feed/json")
                                     .end(function (err, response) {
+                                        //console.log(response)
                                         if (response.ok) {
                                             for(var index in response.body){
                                                 var newPost = new postSchema({
@@ -83,11 +84,11 @@ module.exports = function (passport) {
                                                     categories: response.body[index]["categories"],
                                                     tags: response.body[index]["tags"]
                                                 })
-                                                console.log(newPost)
+                                                //console.log(newPost)
                                                 newPost.save(function (err, data) {
                                                     if (err) console.log(err);
                                                     else console.log('Saved : ', data );
-                                                    console.log(data);
+                                                    //console.log(data);
                                                     return done(null, user);
                                                 });
                                             }
@@ -139,12 +140,13 @@ module.exports = function (passport) {
                             newUser.username = postData.username;
                             newUser.password = newUser.generateHash(password);
                             newUser.email = postData.email,
-                                newUser.gender = postData.gender,
-                                newUser.fullname = postData.fullname,
-                                newUser.contact = postData.contact,
-                                newUser.location = postData.location,
-                                newUser.imageUrl = postData.imageUrl,
-                                newUser.created_at = new Date(),
+                            newUser.gender = postData.gender,
+                            newUser.fullname = postData.fullname,
+                            newUser.contact = postData.contact,
+                            newUser.location = postData.location,
+                            newUser.imageUrl = postData.imageUrl,
+                            newUser.preference = postData.preference,
+                            newUser.created_at = new Date(),
                                 newUser.save(function (err) {
                                     if (err)
                                         return done(err);
@@ -156,29 +158,6 @@ module.exports = function (passport) {
                     });
                     // if the user is logged in but has no local account...
                 }
-                //else if ( !req.user.local.email ) {
-                //    // ...presumably they're trying to connect a local account
-                //    // BUT let's check if the email used to connect a local account is being used by another user
-                //    User.findOne({ 'local.email' :  email }, function(err, user) {
-                //        if (err)
-                //            return done(err);
-                //
-                //        if (user) {
-                //            return done(null, false, req.flash('loginMessage', 'That email is already taken.'));
-                //            // Using 'loginMessage instead of signupMessage because it's used by /connect/local'
-                //        } else {
-                //            var user = req.user;
-                //            user.local.email = email;
-                //            user.local.password = user.generateHash(password);
-                //            user.save(function (err) {
-                //                if (err)
-                //                    return done(err);
-                //
-                //                return done(null,user);
-                //            });
-                //        }
-                //    });
-                //}
                 else {
                     // user is logged in and already has a local account. Ignore signup. (You should log out before trying to create a new account, user!)
                     return done(null, req.user);
