@@ -10,7 +10,8 @@ var like = require('../model/likeDb.js');
 var task = require('../model/taskDb.js');
 var bcrypt   = require('bcrypt-nodejs');
 var nodemailer = require("nodemailer");
-
+var extend = require('util')._extend
+var superagent = require('superagent');
 
 var validateRequest = require('../config/validateRequest.js')
 
@@ -115,23 +116,19 @@ module.exports = function(app, passport){
     });
 
         app.post('/sendMail',function(req,res){
-            console.log(res.body);
-            var mailOptions={
-                to : res.body.to,
-                from: res.body.from,
-                subject : res.body.subject,
-                text : res.body.content
-            }
-            console.log(mailOptions);
-            smtpTransport.sendMail(mailOptions, function(error, response){
-                if(error){
-                    console.log(error);
-                    res.end("error");
-                }else{
-                    console.log("Message sent: " + response.message);
-                    res.end("sent");
-                }
-            });
+            console.log(req.body);
+            superagent
+                .get(req.body.url)
+                .query({email:req.body.email})
+                .query({message:req.body.content})
+                .end(function(err, result){
+                    console.log(result)
+                    if (result.ok) {
+                        res.json(result);
+                    } else {
+                        res.json({ message: false });
+                    }
+                });
             //res.end("send")
         });
     //// process the signup form
@@ -184,6 +181,38 @@ module.exports = function(app, passport){
             })
 
         })
+    })
+    app.post("/queryPost", function(req, res){
+        var queryMsg = req.body.message;
+        postMsg.find({ title: { $regex: queryMsg } }, function(err, posts, next){
+            if (err) return next(err);
+            comment.find({ comment: { $regex: queryMsg } }, function(err, comments, next){
+                if (err) return next(err);
+                res.json({postResult:posts, commentResult:comments});
+            })
+        })
+
+    })
+    app.post("/getPost", function(req, res){
+        var query = req.body.postId;
+        postMsg.findOne({id:query}, function(err, post){
+            if (err) return next(err);
+            if(post){
+                comment.find({postId: query}, function (err, comments, next) {
+                    if (err) return next(err);
+
+                    like.find({postId: query}).sort({ "created_at": -1 }).find(function (err, likes) {
+                        if (err) return next(err);
+
+                        res.json({postResult: post, commentResult: comments, likeResult:likes});
+                    });
+
+                })
+            }else{
+                res.json({ message: "something error" });
+            }
+        })
+
     })
     app.get('/getProfile', function(req, res) {
         console.log(req.user)
