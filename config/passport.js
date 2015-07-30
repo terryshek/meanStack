@@ -137,7 +137,7 @@ module.exports = function (passport) {
                             console.log(req.body)
                             // create the user
                             var newUser = new User();
-                            newUser.username = postData.username;
+                            newUser.username = postData.username.toLowerCase();
                             newUser.password = newUser.generateHash(password);
                             newUser.email = postData.email,
                             newUser.gender = postData.gender,
