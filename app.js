@@ -14,7 +14,7 @@ var cors = require('cors') // cross domain
 
 // Database
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/LiFungLearningDb', function(err) {
+mongoose.connect('mongodb://localhost/learning_app', function(err) {
     if(err) {
         console.log('connection error', err);
     } else {

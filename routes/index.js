@@ -152,8 +152,9 @@ module.exports = function(app, passport){
     app.post('/learningApp/addUser', function(req, res){
         var postData = req.body
         //console.log(postData);
+        var username = postData.username.toLowerCase();
         var newUser = new account({
-            username: postData.username,
+            username: username,
             password: bcrypt.hashSync(postData.password, bcrypt.genSaltSync(8)),
             email : postData.email,
             gender:postData.gender,

@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/learningApp_serverside.iml" filepath="$PROJECT_DIR$/.idea/learningApp_serverside.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/meanStack.iml" filepath="$PROJECT_DIR$/.idea/meanStack.iml" />
     </modules>
   </component>
 </project>
