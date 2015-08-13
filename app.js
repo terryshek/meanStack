@@ -14,7 +14,7 @@ var cors = require('cors') // cross domain
 
 // Database
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/learning_app', function(err) {
+mongoose.connect('mongodb://terryshek:Fredew33@ds029803.mongolab.com:29803/lflearning', function(err) {
     if(err) {
         console.log('connection error', err);
     } else {

@@ -68,7 +68,7 @@ module.exports = function (passport) {
                             if (err) {
                                 console.log(err)
                             } else {
-                                superagent.get(req.body.resource)
+                                superagent.get("http://q67457789.myqnapcloud.com/wp/LFUT/feed/json")
                                     .end(function (err, response) {
                                         //console.log(response)
                                         if (response.ok) {

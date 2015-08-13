@@ -185,9 +185,9 @@ module.exports = function(app, passport){
     })
     app.post("/queryPost", function(req, res){
         var queryMsg = req.body.message;
-        postMsg.find({ title: { $regex: queryMsg } }, function(err, posts, next){
+        postMsg.find({ title: { $regex: queryMsg, $options: 'i' } }, function(err, posts, next){
             if (err) return next(err);
-            comment.find({ comment: { $regex: queryMsg } }, function(err, comments, next){
+            comment.find({ comment: { $regex: queryMsg, $options: 'i' } }, function(err, comments, next){
                 if (err) return next(err);
                 res.json({postResult:posts, commentResult:comments});
             })
